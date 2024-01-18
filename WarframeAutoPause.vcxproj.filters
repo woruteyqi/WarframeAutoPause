@@ -24,14 +24,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>资源文件</Filter>
-    </ClCompile>
     <ClCompile Include="lib\Interception\interception.c">
       <Filter>lib\Interception</Filter>
     </ClCompile>
     <ClCompile Include="KeyManager.cpp">
       <Filter>KeyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
