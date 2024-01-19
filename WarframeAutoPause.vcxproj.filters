@@ -22,6 +22,9 @@
     <Filter Include="lib\Interception">
       <UniqueIdentifier>{bd55010b-d4d0-4dc4-a178-d208a6dd9202}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Logger">
+      <UniqueIdentifier>{5b302f8d-15f7-4cd9-9f24-c2982d133a28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\Interception\interception.c">
@@ -33,6 +36,9 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\Interception\interception.h">
@@ -40,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="KeyManager.h">
       <Filter>KeyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Logger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
