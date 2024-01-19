@@ -37,12 +37,12 @@ int main(int argc, char* argv[]) {
 	
 	KeyManager::MoveAbsolute(500,500);
 
-	for (size_t i = 0; i < 500; i++)
-	{
-		KeyManager::MoveRelative(-1, -1);
-		std::this_thread::sleep_for(std::chrono::milliseconds(5));
-	}
-	KeyManager::SendKey(VK_LBUTTON);
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	KeyManager::SendKey(VK_RBUTTON);
+	//for (size_t i = 0; i < 500; i++)
+	//{
+	//	KeyManager::MoveRelative(-1, -1);
+	//	std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	//}
+	//KeyManager::SendKey(VK_LBUTTON);
+	//std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	//KeyManager::SendKey(VK_RBUTTON);
 }

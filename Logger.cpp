@@ -1,29 +1,31 @@
 #include "Logger.h"
 #include <chrono>
+#include <future>
 #include <ctime>
 void Logger::debug(const std::string&& message)
 {
-	std::clog << GetCurrentTime() << "\033[2m[DEBUG] " << message << "\033[m";
+	std::async([&] {std::clog << GetCurrentTime() << "\033[2m[DEBUG] " << message << "\033[m"; }).get();
 }
 
 void Logger::info(const std::string&& message)
 {
-	std::clog << GetCurrentTime() << "[INFO] " << message;
+	std::async([&] {std::clog << GetCurrentTime() << "[INFO] " << message; }).get();
 }
 
 void Logger::warning(const std::string&& message)
 {
-	std::clog << GetCurrentTime() << "\033[33m[WARNING] " << message << "\033[m";
+	std::async([&] {std::clog << GetCurrentTime() << "\033[33m[WARNING] " << message << "\033[m"; }).get();
+	
 }
 
 void Logger::error(const std::string&& message)
 {
-	std::cerr << GetCurrentTime() << "\033[31;5m[ERROR]\033[m \033[31m" << message << "\033[m";
+	std::async([&] {std::cerr << GetCurrentTime() << "\033[31;5m[ERROR]\033[m \033[31m" << message << "\033[m"; }).get();
 }
 
 void Logger::fatal(const std::string&& message)
 {
-	std::cerr << GetCurrentTime() << "\033[101;5m[FATAL]\033[m \033[91;1m" << message << "\033[m";
+	std::async([&] {std::cerr << GetCurrentTime() << "\033[101;5m[FATAL]\033[m \033[91;1m" << message << "\033[m"; }).get();
 }
 
 const std::string& Logger::GetCurrentTime()
