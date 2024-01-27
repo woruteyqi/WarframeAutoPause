@@ -11,13 +11,13 @@ EEparser::EEparser()
 	char* localappdada{};
 	size_t length{};
 	if (_dupenv_s(&localappdada, &length, "LOCALAPPDATA") == 0) {
-		Logger::debug(std::format("%localappdata% 为：\"{}\"，路径长度：{} 字节\n", localappdada, length));
+		Logger::debug(std::format("系统环境变量 %LocalAppData% 为：\"{}\"，路径长度：{} 字节\n", localappdada, length));
 		this->EElogPath = std::move(localappdada);
 		this->EElogPath.append("\\Warframe\\EE.log");
 		Logger::debug(std::format("EE 路径为：\"{}\"，路径长度 {} 字节\n", EElogPath, EElogPath.size()));
 	}
 	else {
-		Logger::fatal("无法获取环境变量 LOCALAPPDATA 的值，程序将退出！！！\n");
+		Logger::fatal("无法获取系统环境变量 %LocalAppData% 的值，将退出程序！！！\n");
 		exit(-1);
 	}
 }

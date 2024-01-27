@@ -246,7 +246,7 @@ void KeyManager::Mouse::LockPosition(const bool isLock)
 	{
 		interception_set_filter(Context, interception_is_mouse, INTERCEPTION_FILTER_MOUSE_MOVE);
 	}
-	else 
+	else
 	{
 		interception_set_filter(Context, interception_is_mouse, INTERCEPTION_FILTER_MOUSE_NONE);
 	}
