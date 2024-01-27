@@ -3,64 +3,50 @@
 #include <Windows.h>
 #include <vector>
 #include <future>
-#include <sstream>
-#include <chrono>
+#include <thread>
 #include "Logger.h"
 #include "KeyManager.h"
 #include "EEparser.h"
 int main(int argc, char* argv[]) {
-	EEparser ep;
-	auto test = ep.CheckVoidTerrain();
-	if (test.empty())
+	Logger::info("按键盘任意键初始化键盘设备\n");
+	KeyManager::InitKeyborad();
+	Logger::info("按鼠标任意键或移动位置初始化鼠标设备\n");
+	KeyManager::InitMouse();
+	Logger::info("快捷键：\nU->查询地形\nI->自动开核桃（鼠标点击-回车）循环\nO->锁定鼠标位置 （锁定绝对坐标为第一个核桃位置，禁止相对移动）\nP->退出程序\n");
+	while (1)
 	{
-		Logger::info("未找到地形\n");
-	}
-	else {
-		for (const auto& it : test)
+		auto key = KeyManager::LastKeyUp();
+		switch (key)
 		{
-			Logger::info(std::format("找到{}\n", it));
+		case 'U':
+			Logger::debug("抬起U\n");
+			std::thread([] {
+				static EEparser ep; auto test = ep.CheckVoidTerrain();
+				if (test.empty())
+				{
+					Logger::info("未找到地形\n");
+				}
+				for (const auto& it : test)
+				{
+					Logger::warning(std::format("找到{}\n", it));
+					Beep(523, 500);//C
+					Beep(659, 500);//E
+					Beep(783, 500);//G
+				}
+				}).detach();
+			break;
+		case 'I':
+			Logger::debug("抬起I\n");
+			break;
+		case 'O':
+			Logger::debug("抬起O\n");
+			break;
+		case 'P':
+			Logger::warning("抬起P\n");
+			break;
+		default:
+			Logger::debug(std::format("抬起{:#X}\n",key));
+			break;
 		}
 	}
-
-
-	//for (size_t i = 0; i < 3; i++)
-	//{
-	//	Logger::debug(std::format("{}\n", i));
-	//	std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	//	Logger::info(std::format("{}\n", i));
-	//	std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	//	Logger::warning(std::format("{}\n", i));
-	//	std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	//	Logger::error(std::format("{}\n", i));
-	//	std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	//	Logger::fatal(std::format("{}\n", i));
-	//	std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	//}
-
-	//Logger::info("按任意键初始化键盘设备\n");
-	//KeyManager::InitKeyborad();
-	//Logger::info("初始化键盘设备完成\n");
-	//std::this_thread::sleep_for(std::chrono::seconds(1));
-	//KeyManager::PushKey(VK_CONTROL);
-	//KeyManager::PushKey(VK_MENU);
-	//KeyManager::PushKey('A');
-	//KeyManager::PopKey('A');
-	//KeyManager::PopKey(VK_MENU);
-	//KeyManager::PopKey(VK_CONTROL);
-	//std::this_thread::sleep_for(std::chrono::seconds(1));
-	//KeyManager::SendKey(VK_ESCAPE);
-	//Logger::info("移动或按任意键初始化鼠标设备\n");
-	//KeyManager::InitMouse();
-	//Logger::info("初始化鼠标设备完成\n");
-	//
-	//KeyManager::MoveAbsolute(500,500);
-
-	//for (size_t i = 0; i < 500; i++)
-	//{
-	//	KeyManager::MoveRelative(-1, -1);
-	//	std::this_thread::sleep_for(std::chrono::milliseconds(5));
-	//}
-	//KeyManager::SendKey(VK_LBUTTON);
-	//std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	//KeyManager::SendKey(VK_RBUTTON);
 }

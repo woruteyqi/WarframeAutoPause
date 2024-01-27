@@ -15,7 +15,7 @@ void Logger::info(const std::string&& message)
 
 void Logger::warning(const std::string&& message)
 {
-	std::clog << GetCurrentTime() << "\033[33m[WARNING] " << message << "\033[m";
+	std::clog << GetCurrentTime() << "\033[33;1m[WARNING] " << message << "\033[m";
 }
 
 void Logger::error(const std::string&& message)

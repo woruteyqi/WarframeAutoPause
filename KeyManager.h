@@ -30,6 +30,12 @@ public:
 	//阻塞线程，只当抬起给定按键后返回true
 	static bool WaitKeyUp(const UINT VK);
 
+	//阻塞线程，返回第一个按下的按键
+	static UINT LastKeyDown();
+
+	//阻塞线程，返回第一个抬起的按键
+	static UINT LastKeyUp();
+
 	//鼠标移动到绝对坐标
 	static void MoveAbsolute(const UINT x, const UINT y);
 
@@ -46,6 +52,7 @@ private:
 		~Keyborad();
 		void PushKey(const UINT VSC);
 		void PopKey(const UINT VSC);
+		std::pair<USHORT, USHORT> GetKeyState();
 		bool WaitKey(const UINT VSC, const bool pushORpop);
 	private:
 		InterceptionContext Context;

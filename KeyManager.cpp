@@ -90,6 +90,38 @@ bool KeyManager::WaitKeyUp(const UINT VK)
 	return KeyboradApp->WaitKey(MapVirtualKey(VK, MAPVK_VK_TO_VSC), true);
 }
 
+UINT KeyManager::LastKeyDown()
+{
+	if (KeyboradApp == nullptr)
+	{
+		return false;
+	}
+	while (1)
+	{
+		auto key = KeyboradApp->GetKeyState();
+		if (key.second == InterceptionKeyState::INTERCEPTION_KEY_DOWN)
+		{
+			return MapVirtualKey(key.first, MAPVK_VSC_TO_VK);
+		}
+	}
+}
+
+UINT KeyManager::LastKeyUp()
+{
+	if (KeyboradApp == nullptr)
+	{
+		return false;
+	}
+	while (1)
+	{
+		auto key = KeyboradApp->GetKeyState();
+		if (key.second == InterceptionKeyState::INTERCEPTION_KEY_UP)
+		{
+			return MapVirtualKey(key.first, MAPVK_VSC_TO_VK);
+		}
+	}
+}
+
 void KeyManager::MoveAbsolute(const UINT x, const UINT y)
 {
 	if (MouseApp != nullptr)
@@ -124,6 +156,18 @@ void KeyManager::Keyborad::PopKey(const UINT VSC)
 {
 	const InterceptionKeyStroke pop{ (USHORT)VSC,INTERCEPTION_KEY_UP ,NULL };
 	interception_send(Context, Device, (InterceptionStroke*)&pop, 1);
+}
+
+std::pair<USHORT, USHORT> KeyManager::Keyborad::GetKeyState()
+{
+	interception_set_filter(Context, interception_is_keyboard, INTERCEPTION_FILTER_KEY_DOWN|INTERCEPTION_FILTER_KEY_UP);
+	InterceptionStroke stroke{};
+	if (interception_receive(Context, interception_wait(Context), &stroke, 1))
+	{
+		interception_send(Context, Device, &stroke, 1);
+	}
+	interception_set_filter(Context, interception_is_keyboard, INTERCEPTION_FILTER_KEY_NONE);
+	return std::make_pair( ((InterceptionKeyStroke*)&stroke)->code, ((InterceptionKeyStroke*)&stroke)->state);
 }
 
 bool KeyManager::Keyborad::WaitKey(const UINT VSC, const bool pushORpop)
