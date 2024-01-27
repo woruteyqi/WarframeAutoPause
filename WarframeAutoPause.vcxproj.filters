@@ -25,6 +25,9 @@
     <Filter Include="Logger">
       <UniqueIdentifier>{5b302f8d-15f7-4cd9-9f24-c2982d133a28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EEparser">
+      <UniqueIdentifier>{fb87d84d-e896-4647-ae37-a7e0ed1329ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\Interception\interception.c">
@@ -39,6 +42,9 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Logger</Filter>
     </ClCompile>
+    <ClCompile Include="EEparser.cpp">
+      <Filter>EEparser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\Interception\interception.h">
@@ -49,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="EEparser.h">
+      <Filter>EEparser</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

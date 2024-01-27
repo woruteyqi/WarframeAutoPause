@@ -131,12 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EEparser.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="lib\Interception\interception.c" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EEparser.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="lib\Interception\interception.h" />
     <ClInclude Include="Logger.h" />
