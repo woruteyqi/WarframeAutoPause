@@ -37,5 +37,5 @@ const std::string& Logger::GetCurrentTime()
 	static std::string formatTime{};
 	formatTime = std::format("[{}年{}月{}日{:0>2}时{:0>2}分{:0>2}秒]",
 		tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_yday + 1, tm.tm_hour, tm.tm_min, tm.tm_sec);
-	return formatTime;
+	return std::ref(formatTime);
 }
