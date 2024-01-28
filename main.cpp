@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
 	KeyManager::InitMouse();
 	std::thread(ImageProc::AutoPause).detach();
 	Logger::info("红氧暂停已开启，请将地图模式调整为全屏地图（选项>界面>以叠层地图显示，或者默认按M键切换）\n"
-		"注意：游戏应为无边框全屏模式"
+		"注意：游戏应为无边框全屏模式\n"
 		"注意：检测到红氧会发出声音，连续检测红氧3次触发暂停\n\n"
 		"快捷键：\n"
 		"U->查询地形（查询到有声音提示）\n"
@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
 			flag[0] = !flag[0];
 			flag[0] ? Logger::info("开始开核桃\n") : Logger::info("停止开核桃\n");
 
-			static auto onece = [&] {
+			static const auto&& OpenRelic = [&] {
 				std::thread([&] {
 					std::random_device rd;
 					while (1)
@@ -83,10 +83,33 @@ int main(int argc, char* argv[]) {
 			break;
 		case 'O':
 			//Logger::debug("抬起O\n");
-			flag[2] = !flag[2];
-			flag[2] ? Logger::info("锁定鼠标位置\n") : Logger::info("解锁鼠标位置\n");
-			KeyManager::MoveAbsolute(390, 280);
-			KeyManager::LockMousePosition(flag[2]);
+			flag[1] = !flag[1];
+			flag[1] ? Logger::info("锁定鼠标位置\n") : Logger::info("解锁鼠标位置\n");
+			static const auto&& LockMouse = [&]{
+				std::thread([&] {
+					bool locked{false};
+					while (1)
+					{
+						if (flag[1])
+						{
+							if (!locked)
+							{
+								KeyManager::MoveAbsolute(390, 280);
+								KeyManager::LockMousePosition(true);
+								locked = true;
+							}
+							ImageProc::ActiveWindow();
+							std::this_thread::sleep_for(std::chrono::seconds(1));
+						}
+						else if(locked)
+						{
+							KeyManager::LockMousePosition(false);
+							locked = false;
+						}
+					}
+				}).detach();
+				return 0;
+			}();
 			break;
 		case 'P':
 			//Logger::debug("抬起P\n");

@@ -6,13 +6,14 @@ class ImageProc
 {
 public:
 	static void AutoPause();
+	static void ActiveWindow();
 private:
 	inline static libop* OP = new libop();
-	inline static HWND WfGameWindow{ [] {
+	inline static long WfGameWindow{ [] {
 		long ret{};
 		OP->FindWindowByProcess(L"Warframe.x64.exe",L"", L"Warframe",&ret);
 		Logger::debug(std::format("游戏窗口句柄：{:X}\n", ret));
-		return reinterpret_cast<HWND>(ret);
+		return ret;
 		}()
 	};
 	//屏幕坐标转换归一化坐标

@@ -33,6 +33,12 @@ void ImageProc::AutoPause()
 	}
 }
 
+void ImageProc::ActiveWindow()
+{
+	long ret{};
+	OP->SetWindowState(WfGameWindow, 1, &ret);
+}
+
 std::pair<float, float> ImageProc::scr2nor(int X, int Y, int screenWidth, int screenHeight)
 {
 	return {static_cast<float>(X) / static_cast<float>(screenWidth) ,static_cast<float>(Y) / static_cast<float>(screenHeight)};
