@@ -61,7 +61,10 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(ProjectDir)lib\Op\op_x64.dll" "$(TargetDir)"</Command>
+      <Command>xcopy /Y "$(ProjectDir)lib\Op\op_x64.dll" "$(TargetDir)"
+xcopy /Y "$(ProjectDir)lib\Interception\*.bat" "$(TargetDir)"
+xcopy /Y "$(ProjectDir)lib\Interception\*.exe" "$(TargetDir)"
+</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>复制动态库</Message>
@@ -86,7 +89,10 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(ProjectDir)lib\Op\op_x64.dll" "$(TargetDir)"</Command>
+      <Command>xcopy /Y "$(ProjectDir)lib\Op\op_x64.dll" "$(TargetDir)"
+xcopy /Y "$(ProjectDir)lib\Interception\*.bat" "$(TargetDir)"
+xcopy /Y "$(ProjectDir)lib\Interception\*.exe" "$(TargetDir)"
+</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>复制动态库</Message>
@@ -113,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
+    <None Include="lib\Interception\install-interception.exe" />
+    <None Include="lib\Interception\卸载驱动_右键以管理员身份运行.bat" />
+    <None Include="lib\Interception\安装驱动_右键以管理员身份运行.bat" />
     <None Include="lib\Op\op_x64.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

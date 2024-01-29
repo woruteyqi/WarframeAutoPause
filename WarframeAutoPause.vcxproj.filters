@@ -87,5 +87,14 @@
     <None Include=".editorconfig">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="lib\Interception\install-interception.exe">
+      <Filter>lib\Interception</Filter>
+    </None>
+    <None Include="lib\Interception\安装驱动_右键以管理员身份运行.bat">
+      <Filter>lib\Interception</Filter>
+    </None>
+    <None Include="lib\Interception\卸载驱动_右键以管理员身份运行.bat">
+      <Filter>lib\Interception</Filter>
+    </None>
   </ItemGroup>
 </Project>
