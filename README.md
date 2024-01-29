@@ -2,6 +2,7 @@
 ======
 ```WarframeAutoPause``` 别名 ```虚空睡觉助手``` 是一个开源软件，目的是帮助挂机的配置低、不熟练怕白给以及想要快速roll到挂机地形等玩家准备，并且拥有强大的锁定鼠标功能防止开核桃时鼠标回中
 
+[![build](https://github.com/woruteyqi/WarframeAutoPause/actions/workflows/msbuild.yml/badge.svg)](https://github.com/woruteyqi/WarframeAutoPause/actions/workflows/msbuild.yml)
 <details> <summary>使用截图</summary>
   
    ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/a9e1ff93-42d9-4505-a3e2-e3f127eb9078)
