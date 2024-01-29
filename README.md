@@ -23,7 +23,7 @@
 
 ## 下载
 - 在本项目的[Github Release](https://github.com/woruteyqi/WarframeAutoPause/releases)页面上，下载最新的稳定发布版
-- 在本项目[Actions](https://github.com/woruteyqi/WarframeAutoPause/actions)页面上点击最新的```workflow runs```在下面找到```Artifacts```里面包含最新的自动构建
+- 在本项目的[Github Actions](https://github.com/woruteyqi/WarframeAutoPause/actions)页面上，点击最新的```workflow runs```在下面找到```Artifacts```里面包含最新的自动构建
 
 ## 教程
 - todo
