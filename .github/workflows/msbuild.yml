@@ -10,6 +10,9 @@ jobs:
   build:
     runs-on: windows-latest
     
+    env:
+      LC_ALL: C.UTF-8
+      
     steps:
     - uses: actions/checkout@v4.1.1
        
@@ -17,7 +20,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.3.2
 
     - name: DebugBuild
-      run: msbuild /m /p:Configuration=Debug /t:Build 
+      run: msbuild /m /p:Configuration=Debug /p:Utf8Output=true /t:Build 
       
     - name: Upload DebugBulid to Artifacts
       uses: actions/upload-artifact@v4.3.0
@@ -29,7 +32,7 @@ jobs:
           ./x64/Debug/*.dll
           
     - name: ReleaseBuild
-      run: msbuild /m /p:Configuration=Release /t:Build 
+      run: msbuild /m /p:Configuration=Release /p:Utf8Output=true /t:Build 
       
     - name: Upload ReleaseBulid to Artifacts
       uses: actions/upload-artifact@v4.3.0
