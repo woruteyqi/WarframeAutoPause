@@ -10,8 +10,6 @@
 #include "EEparser.h"
 #include "ImageProc.h"
 int main(int argc, char* argv[]) {
-	SetConsoleOutputCP(CP_UTF8);
-	SetConsoleCP(CP_UTF8);
 	Logger::info("按键盘任意键初始化键盘设备\n");
 	KeyManager::InitKeyborad();
 	Logger::info("按鼠标任意键或移动位置初始化鼠标设备\n");
