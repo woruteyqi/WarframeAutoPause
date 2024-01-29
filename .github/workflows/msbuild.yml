@@ -1,0 +1,42 @@
+name: MSBuild
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+    
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4.1.1
+       
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.3.2
+
+    - name: DebugBuild
+      run: msbuild /m /p:Configuration=Debug /t:Build 
+      
+    - name: Upload DebugBulid to Artifacts
+      uses: actions/upload-artifact@v4.3.0
+      with: 
+        name: artifact_debug-${{ github.run_id }}
+        path: | 
+          ./x64/Debug/*.exe
+          ./x64/Debug/*.bat
+          ./x64/Debug/*.dll
+          
+    - name: ReleaseBuild
+      run: msbuild /m /p:Configuration=Release /t:Build 
+      
+    - name: Upload ReleaseBulid to Artifacts
+      uses: actions/upload-artifact@v4.3.0
+      with: 
+        name: artifact_release-${{ github.run_id }}
+        path: | 
+          ./x64/Release/*.exe
+          ./x64/Release/*.bat
+          ./x64/Release/*.dll
+
