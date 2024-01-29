@@ -33,4 +33,4 @@
 * 编译器：VS2022 MSVC 64
 ### 第三方库
 * [Interception](https://github.com/oblitum/Interception)(已在源码)
-* [Op](https://github.com/WallBreaker2/op)(动态编译，静态链接)
+* [Op](https://github.com/WallBreaker2/op)(已编译)
