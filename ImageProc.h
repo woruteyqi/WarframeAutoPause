@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Windows.h"
 #include "Logger.h"
 #include "lib/Op/libop.h"
@@ -7,21 +7,26 @@ class ImageProc
 public:
 	static void AutoPause();
 	static void ActiveWindow();
+
+	//å±å¹•åæ ‡è½¬æ¢å½’ä¸€åŒ–åæ ‡
+	static std::pair<float, float> scr2nor(int X, int Y,
+		int screenWidth = GetSystemMetrics(SM_CXSCREEN), int screenHeight = GetSystemMetrics(SM_CYSCREEN));
+
+	//å½’ä¸€åŒ–åæ ‡è½¬æ¢å±å¹•åæ ‡
+	static std::pair<int, int> nor2scr(float X, float Y,
+		int screenWidth = GetSystemMetrics(SM_CXSCREEN), int screenHeight = GetSystemMetrics(SM_CYSCREEN));
 private:
 	inline static libop* OP = new libop();
 	inline static long WfGameWindow{ [] {
 		long ret{};
 		OP->FindWindowByProcess(L"Warframe.x64.exe",L"", L"Warframe",&ret);
-		Logger::debug(std::format("ÓÎÏ·´°¿Ú¾ä±ú£º{:X}\n", ret));
+		Logger::debug(std::format("æ¸¸æˆçª—å£å¥æŸ„ï¼š{:X}\n", ret));
+		if (!ret)
+		{
+			Logger::error("æ¸¸æˆçª—å£å¥æŸ„è·å–å¤±è´¥ï¼Œæ¿€æ´»æ¸¸æˆçª—å£åŠŸèƒ½å¤±æ•ˆ\n");
+		}
 		return ret;
 		}()
 	};
-	//ÆÁÄ»×ø±ê×ª»»¹éÒ»»¯×ø±ê
-	static std::pair<float, float> scr2nor(int X, int Y,
-		int screenWidth = GetSystemMetrics(SM_CXSCREEN), int screenHeight = GetSystemMetrics(SM_CYSCREEN));
-
-	//¹éÒ»»¯×ø±ê×ª»»ÆÁÄ»×ø±ê
-	static std::pair<int, int> nor2scr(float X, float Y,
-		int screenWidth = GetSystemMetrics(SM_CXSCREEN), int screenHeight = GetSystemMetrics(SM_CYSCREEN));
 };
 

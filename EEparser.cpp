@@ -1,4 +1,4 @@
-#include <sstream>
+ï»¿#include <sstream>
 #include <fstream>
 #include <chrono>
 #include <initializer_list>
@@ -11,13 +11,13 @@ EEparser::EEparser()
 	char* localappdada{};
 	size_t length{};
 	if (_dupenv_s(&localappdada, &length, "LOCALAPPDATA") == 0) {
-		Logger::debug(std::format("ÏµÍ³»·¾³±äÁ¿ %LocalAppData% Îª£º\"{}\"£¬Â·¾¶³¤¶È£º{} ×Ö½Ú\n", localappdada, length));
+		Logger::debug(std::format("ç³»ç»Ÿç¯å¢ƒå˜é‡ %LocalAppData% ä¸ºï¼š\"{}\"ï¼Œè·¯å¾„é•¿åº¦ï¼š{} å­—èŠ‚\n", localappdada, length));
 		this->EElogPath = std::move(localappdada);
 		this->EElogPath.append("\\Warframe\\EE.log");
-		Logger::debug(std::format("EE Â·¾¶Îª£º\"{}\"£¬Â·¾¶³¤¶È {} ×Ö½Ú\n", EElogPath, EElogPath.size()));
+		Logger::debug(std::format("EE è·¯å¾„ä¸ºï¼š\"{}\"ï¼Œè·¯å¾„é•¿åº¦ {} å­—èŠ‚\n", EElogPath, EElogPath.size()));
 	}
 	else {
-		Logger::fatal("ÎŞ·¨»ñÈ¡ÏµÍ³»·¾³±äÁ¿ %LocalAppData% µÄÖµ£¬½«ÍË³ö³ÌĞò£¡£¡£¡\n");
+		Logger::fatal("æ— æ³•è·å–ç³»ç»Ÿç¯å¢ƒå˜é‡ %LocalAppData% çš„å€¼ï¼Œå°†é€€å‡ºç¨‹åºï¼ï¼ï¼\n");
 		exit(-1);
 	}
 }
@@ -31,26 +31,26 @@ std::string EEparser::QueryForLastGenerate() const
 	std::ifstream EElog(EElogPath);
 	if (!EElog)
 	{
-		Logger::fatal("´ò¿ªEEÊ§°Ü£¬½«ÍË³ö³ÌĞò£¡£¡£¡\n");
+		Logger::fatal("æ‰“å¼€EEå¤±è´¥ï¼Œå°†é€€å‡ºç¨‹åºï¼ï¼ï¼\n");
 		exit(-1);
 	}
 	std::stringstream EE{};
 	EElog.seekg(0, std::ios::end);
-	Logger::debug(std::format("EE´óĞ¡£º{}×Ö½Ú£¬{:.2f}MB\n", (long)EElog.tellg(), (long)EElog.tellg() / 1024.0f / 1024.0f));
+	Logger::debug(std::format("EEå¤§å°ï¼š{}å­—èŠ‚ï¼Œ{:.2f}MB\n", (long)EElog.tellg(), (long)EElog.tellg() / 1024.0f / 1024.0f));
 	EElog.seekg(0, std::ios::beg);
 	auto begin = std::chrono::high_resolution_clock::now();
 	EE << EElog.rdbuf();
 	auto end = std::chrono::high_resolution_clock::now();
-	Logger::debug(std::format("¶ÁÈ¡EEÎÄ¼şºÄÊ±£º{}\n", std::chrono::duration_cast<std::chrono::milliseconds>(end - begin)));
+	Logger::debug(std::format("è¯»å–EEæ–‡ä»¶è€—æ—¶ï¼š{}\n", std::chrono::duration_cast<std::chrono::milliseconds>(end - begin)));
 	auto str = EE.str();
 	auto lastpos = str.rfind("Sys [Info]: Generated layout in");
 	lastpos = str.rfind("\n", lastpos);
-	Logger::debug(std::format("×îºóÒ»´ÎµØĞÎÉú³É¿ªÊ¼Î»ÖÃ£º{}\n", lastpos));
+	Logger::debug(std::format("æœ€åä¸€æ¬¡åœ°å½¢ç”Ÿæˆå¼€å§‹ä½ç½®ï¼š{}\n", lastpos));
 	auto endpos = str.find("Sys [Info]: \n", lastpos + 100);
 	endpos = str.find("\n", endpos);
-	Logger::debug(std::format("×îºóÒ»´ÎµØĞÎÉú³ÉÖÕÖ¹Î»ÖÃ£º{}\n", endpos));
+	Logger::debug(std::format("æœ€åä¸€æ¬¡åœ°å½¢ç”Ÿæˆç»ˆæ­¢ä½ç½®ï¼š{}\n", endpos));
 	auto sub = str.substr(lastpos, endpos - lastpos);
-	Logger::debug(std::format("×îºóÒ»´ÎµØĞÎÉú³ÉµÄĞÅÏ¢£º{}\n", sub));
+	Logger::debug(std::format("æœ€åä¸€æ¬¡åœ°å½¢ç”Ÿæˆçš„ä¿¡æ¯ï¼š{}\n", sub));
 	EElog.close();
 	return sub;
 }
@@ -65,7 +65,7 @@ std::vector<std::string> EEparser::CheckVoidTerrain() const
 		auto pos = lastGenerate.find(it.second);
 		if (pos != std::string::npos)
 		{
-			result.push_back(std::string(it.first).append(pos < 250 ? "£¬ÔÚµÚÒ»¸ö´óµØĞÎ" : "£¬²»ÔÚµÚÒ»¸ö´óµØĞÎ"));
+			result.push_back(std::string(it.first).append(pos < 250 ? "ï¼Œåœ¨ç¬¬ä¸€ä¸ªå¤§åœ°å½¢" : "ï¼Œä¸åœ¨ç¬¬ä¸€ä¸ªå¤§åœ°å½¢"));
 		}
 	}
 	return result;

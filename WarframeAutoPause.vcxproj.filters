@@ -84,5 +84,8 @@
     <None Include="lib\Op\op_x64.dll">
       <Filter>lib\Op</Filter>
     </None>
+    <None Include=".editorconfig">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

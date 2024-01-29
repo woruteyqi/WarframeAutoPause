@@ -1,10 +1,10 @@
-#include "ImageProc.h"
+ï»¿#include "ImageProc.h"
 #include "KeyManager.h"
 #include "thread"
 void ImageProc::AutoPause()
 {
 	auto sp1{ nor2scr(0.026041666f,0.046296295f) }, sp2{nor2scr(0.078125f,0.23148148f)};
-	Logger::debug(std::format("¼ì²âÇøÓòp1-> X{}£¬Y{}£¬p2-> X{}£¬Y{}\n",sp1.first, sp1.second, sp2.first, sp2.second));
+	Logger::debug(std::format("æ£€æµ‹åŒºåŸŸp1-> X{}ï¼ŒY{}ï¼Œp2-> X{}ï¼ŒY{}\n",sp1.first, sp1.second, sp2.first, sp2.second));
 	int count{0};
 	while (1)
 	{
@@ -12,22 +12,22 @@ void ImageProc::AutoPause()
 		OP->FindColor(sp1.first, sp1.second, sp2.first, sp2.second, L"B81010-181010",0.7,7,&x,&y, &ret);
 		if (ret)
 		{
-			Logger::debug(std::format("Æ¥Åäµ½ÑÕÉ«£¬Î»ÓÚX{},Y{}\n", x, y));
+			Logger::debug(std::format("åŒ¹é…åˆ°é¢œè‰²ï¼Œä½äºX{},Y{}\n", x, y));
 			Beep(880, 500);
 			count++; 
-			Logger::debug(std::format("Á¬ĞøºìÑõ¼ÆÊı£º{}\n", count));
+			Logger::debug(std::format("è¿ç»­çº¢æ°§è®¡æ•°ï¼š{}\n", count));
 			if (count > 2)
 			{
-				Logger::warning("Á¬ĞøºìÑõ£¡³¢ÊÔÔİÍ£\n");
-				KeyManager::SendKey(VK_LBUTTON); Logger::debug("·¢ËÍVK_LBUTTON\n");
+				Logger::warning("è¿ç»­çº¢æ°§ï¼å°è¯•æš‚åœ\n");
+				KeyManager::SendKey(VK_LBUTTON); Logger::debug("å‘é€VK_LBUTTON\n");
 				std::this_thread::sleep_for(std::chrono::milliseconds(500));
-				KeyManager::SendKey(VK_ESCAPE); Logger::debug("·¢ËÍVK_ESCAPE\n");
+				KeyManager::SendKey(VK_ESCAPE); Logger::debug("å‘é€VK_ESCAPE\n");
 			}
 		}
 		else
 		{
 			count = 0;
-			//Logger::debug("Î´ÕÒµ½\n");
+			//Logger::debug("æœªæ‰¾åˆ°\n");
 		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}

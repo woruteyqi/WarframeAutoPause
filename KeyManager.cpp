@@ -1,6 +1,5 @@
-#include "KeyManager.h"
+﻿#include "KeyManager.h"
 
-KeyManager::Keyborad* KeyManager::KeyboradApp{ nullptr };
 void KeyManager::InitKeyborad()
 {
 	if (KeyboradApp == nullptr)
@@ -189,8 +188,6 @@ bool KeyManager::Keyborad::WaitKey(const UINT VSC, const bool pushORpop)
 	return true;
 }
 
-
-KeyManager::Mouse* KeyManager::MouseApp{nullptr};
 void KeyManager::InitMouse()
 {
 	if (MouseApp == nullptr)

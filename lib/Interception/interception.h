@@ -1,4 +1,4 @@
-#ifndef _INTERCEPTION_H_
+﻿#ifndef _INTERCEPTION_H_
 #define _INTERCEPTION_H_
 
 #ifdef INTERCEPTION_STATIC

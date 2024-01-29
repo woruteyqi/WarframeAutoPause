@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <fstream>
 #include <vector>
 #include <thread>
@@ -10,46 +10,46 @@
 #include "EEparser.h"
 #include "ImageProc.h"
 int main(int argc, char* argv[]) {
-	Logger::info("°´¼üÅÌÈÎÒâ¼ü³õÊ¼»¯¼üÅÌÉè±¸\n");
+	Logger::info("æŒ‰é”®ç›˜ä»»æ„é”®åˆå§‹åŒ–é”®ç›˜è®¾å¤‡\n");
 	KeyManager::InitKeyborad();
-	Logger::info("°´Êó±êÈÎÒâ¼ü»òÒÆ¶¯Î»ÖÃ³õÊ¼»¯Êó±êÉè±¸\n");
+	Logger::info("æŒ‰é¼ æ ‡ä»»æ„é”®æˆ–ç§»åŠ¨ä½ç½®åˆå§‹åŒ–é¼ æ ‡è®¾å¤‡\n");
 	KeyManager::InitMouse();
 	std::thread(ImageProc::AutoPause).detach();
-	Logger::info("ºìÑõÔİÍ£ÒÑ¿ªÆô£¬Çë½«µØÍ¼Ä£Ê½µ÷ÕûÎªÈ«ÆÁµØÍ¼£¨Ñ¡Ïî>½çÃæ>ÒÔµş²ãµØÍ¼ÏÔÊ¾£¬»òÕßÄ¬ÈÏ°´M¼üÇĞ»»£©\n"
-		"×¢Òâ£ºÓÎÏ·Ó¦ÎªÎŞ±ß¿òÈ«ÆÁÄ£Ê½\n"
-		"×¢Òâ£º¼ì²âµ½ºìÑõ»á·¢³öÉùÒô£¬Á¬Ğø¼ì²âºìÑõ3´Î´¥·¢ÔİÍ£\n\n"
-		"¿ì½İ¼ü£º\n"
-		"U->²éÑ¯µØĞÎ£¨²éÑ¯µ½ÓĞÉùÒôÌáÊ¾£©\n"
-		"I->×Ô¶¯¿ªºËÌÒ£¨Êó±êµã»÷-»Ø³µ£©Ñ­»·£¬Ê¹ÓÃËæ»úÑÓ³Ù\n"
-		"O->Ëø¶¨Êó±êÎ»ÖÃ£¨Ëø¶¨¾ø¶Ô×ø±êÎªµÚÒ»¸öºËÌÒÎ»ÖÃ£¬½ûÖ¹Ïà¶ÔÒÆ¶¯£¬Í¬Ê±»á±£³ÖÓÎÏ·´°¿Ú¼¤»î²¢ÖÃÓÚ¶¥²ã£©\n"
-		"P->ÍË³ö³ÌĞò\n\n");
+	Logger::info("çº¢æ°§æš‚åœå·²å¼€å¯ï¼Œè¯·å°†åœ°å›¾æ¨¡å¼è°ƒæ•´ä¸ºå…¨å±åœ°å›¾ï¼ˆé€‰é¡¹>ç•Œé¢>ä»¥å å±‚åœ°å›¾æ˜¾ç¤ºï¼Œæˆ–è€…é»˜è®¤æŒ‰Mé”®åˆ‡æ¢ï¼‰\n"
+		"æ³¨æ„ï¼šæ¸¸æˆåº”ä¸ºæ— è¾¹æ¡†å…¨å±æ¨¡å¼\n"
+		"æ³¨æ„ï¼šæ£€æµ‹åˆ°çº¢æ°§ä¼šå‘å‡ºå£°éŸ³ï¼Œè¿ç»­æ£€æµ‹çº¢æ°§3æ¬¡è§¦å‘æš‚åœ\n\n"
+		"å¿«æ·é”®ï¼š\n"
+		"U->æŸ¥è¯¢åœ°å½¢ï¼ˆæŸ¥è¯¢åˆ°æœ‰å£°éŸ³æç¤ºï¼‰\n"
+		"I->è‡ªåŠ¨å¼€æ ¸æ¡ƒï¼ˆé¼ æ ‡ç‚¹å‡»-å›è½¦ï¼‰å¾ªç¯ï¼Œä½¿ç”¨éšæœºå»¶è¿Ÿ\n"
+		"O->é”å®šé¼ æ ‡ä½ç½®ï¼ˆé”å®šç»å¯¹åæ ‡ä¸ºç¬¬ä¸€ä¸ªæ ¸æ¡ƒä½ç½®ï¼Œç¦æ­¢ç›¸å¯¹ç§»åŠ¨ï¼ŒåŒæ—¶ä¼šä¿æŒæ¸¸æˆçª—å£æ¿€æ´»å¹¶ç½®äºé¡¶å±‚ï¼‰\n"
+		"P->é€€å‡ºç¨‹åº\n\n");
 	while (1)
 	{
 		UINT key{ KeyManager::LastKeyUp() };
-		static bool flag[3]{false};
+		static bool flag[2]{false};
 		static int exitcount{ 0 };
 
 		switch (key)
 		{
 		case 'U':
-			//Logger::debug("Ì§ÆğU\n");
+			//Logger::debug("æŠ¬èµ·U\n");
 			std::thread([] {
-				Logger::info("¿ªÊ¼Ñ°ÕÒĞé¿ÕµØĞÎ\n");
+				Logger::info("å¼€å§‹å¯»æ‰¾è™šç©ºåœ°å½¢\n");
 				static EEparser ep; auto test = ep.CheckVoidTerrain();
 				if (test.empty())
 				{
-					Logger::info("Î´ÕÒµ½µØĞÎ\n");
+					Logger::info("æœªæ‰¾åˆ°åœ°å½¢\n");
 				}
 				int count{ 0 };
 				for (const auto& it : test)
 				{
 					
-					Logger::warning(std::format("ÕÒµ½{}\n", it));
-					const auto& GetFreq = [](int HalfSteps)
+					Logger::warning(std::format("æ‰¾åˆ°{}\n", it));
+					const auto&& GetFreq = [](int HalfSteps)
 					{
 						const int A4{ 440 };
 						int Freq{ static_cast<int>(std::pow((float)2, (float)HalfSteps / (float)12) * (float)A4) };
-						Logger::debug(std::format("HalfSteps: {} ÆµÂÊ£º{}\n", HalfSteps, Freq));
+						Logger::debug(std::format("HalfSteps: {} Freqï¼š{}\n", HalfSteps, Freq));
 						return Freq;
 					};
 					Beep(GetFreq(3 + count), 500);
@@ -60,9 +60,9 @@ int main(int argc, char* argv[]) {
 			}).detach();
 			break;
 		case 'I':
-			//Logger::debug("Ì§ÆğI\n");
+			//Logger::debug("æŠ¬èµ·I\n");
 			flag[0] = !flag[0];
-			flag[0] ? Logger::info("¿ªÊ¼¿ªºËÌÒ\n") : Logger::info("Í£Ö¹¿ªºËÌÒ\n");
+			flag[0] ? Logger::info("å¼€å§‹å¼€æ ¸æ¡ƒ\n") : Logger::info("åœæ­¢å¼€æ ¸æ¡ƒ\n");
 
 			static const auto&& OpenRelic = [&] {
 				std::thread([&] {
@@ -71,9 +71,9 @@ int main(int argc, char* argv[]) {
 					{
 						if (flag[0])
 						{
-							KeyManager::SendKey(VK_LBUTTON, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("ÊäÈëVK_LBUTTON\n");
+							KeyManager::SendKey(VK_LBUTTON, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("è¾“å…¥VK_LBUTTON\n");
 							std::this_thread::sleep_for(std::chrono::milliseconds(std::uniform_int_distribution<>(300, 500)(rd)));
-							KeyManager::SendKey(VK_RETURN, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("ÊäÈëVK_RETURN\n");
+							KeyManager::SendKey(VK_RETURN, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("è¾“å…¥VK_RETURN\n");
 							std::this_thread::sleep_for(std::chrono::milliseconds(std::uniform_int_distribution<>(1500, 3000)(rd)));
 						}
 					}
@@ -82,22 +82,23 @@ int main(int argc, char* argv[]) {
 			}();
 			break;
 		case 'O':
-			//Logger::debug("Ì§ÆğO\n");
+			//Logger::debug("æŠ¬èµ·O\n");
 			flag[1] = !flag[1];
-			flag[1] ? Logger::info("Ëø¶¨Êó±êÎ»ÖÃ\n") : Logger::info("½âËøÊó±êÎ»ÖÃ\n");
+			flag[1] ? Logger::info("é”å®šé¼ æ ‡ä½ç½®\n") : Logger::info("è§£é”é¼ æ ‡ä½ç½®\n");
 			static const auto&& LockMouse = [&]{
 				std::thread([&] {
 					bool locked{false};
+					auto&& pos = ImageProc::nor2scr(0.203125f, 0.25925925f);
 					while (1)
 					{
 						if (flag[1])
 						{
 							if (!locked)
 							{
-								KeyManager::MoveAbsolute(390, 280);
 								KeyManager::LockMousePosition(true);
 								locked = true;
 							}
+							KeyManager::MoveAbsolute(pos.first, pos.second);//é˜²æ­¢å›ä¸­å¿…é¡»ä¿æŒç§»åŠ¨
 							ImageProc::ActiveWindow();
 							std::this_thread::sleep_for(std::chrono::seconds(1));
 						}
@@ -112,18 +113,18 @@ int main(int argc, char* argv[]) {
 			}();
 			break;
 		case 'P':
-			//Logger::debug("Ì§ÆğP\n");
+			//Logger::debug("æŠ¬èµ·P\n");
 			exitcount++;
 			if (exitcount > 1)
 			{
-				Logger::info("ÒÑÍË³ö\n");
+				Logger::info("å·²é€€å‡º\n");
 				exit(1);
 			}
-			Logger::warning("È·¶¨ÍË³öÇëÔÙ°´P£¬°´ÈÎÒâ·Ç¿ì½İ¼ü½«ÖØÖÃ¼ÆÊı\n");
+			Logger::warning("ç¡®å®šé€€å‡ºè¯·å†æŒ‰Pï¼ŒæŒ‰ä»»æ„éå¿«æ·é”®å°†é‡ç½®è®¡æ•°\n");
 			break;
 		default:
 			exitcount = 0;
-			//Logger::debug(std::format("Ì§Æğ{:#X}\n",key));
+			//Logger::debug(std::format("æŠ¬èµ·{:#X}\n",key));
 			break;
 		}
 	}

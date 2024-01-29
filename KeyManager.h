@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "lib/Interception/interception.h"
 #include <chrono>
 #include <thread>
@@ -9,40 +9,40 @@
 class KeyManager
 {
 public:
-	//×èÈûÏß³Ì£¬³õÊ¼»¯¼üÅÌÉè±¸
+	//é˜»å¡çº¿ç¨‹ï¼Œåˆå§‹åŒ–é”®ç›˜è®¾å¤‡
 	static void InitKeyborad();
 
-	//×èÈûÏß³Ì£¬³õÊ¼»¯Êó±êÉè±¸
+	//é˜»å¡çº¿ç¨‹ï¼Œåˆå§‹åŒ–é¼ æ ‡è®¾å¤‡
 	static void InitMouse();
 
-	//°´ÏÂ°´¼ü
+	//æŒ‰ä¸‹æŒ‰é”®
 	static void PushKey(const UINT VK);
 
-	//Ì§Æğ°´¼ü
+	//æŠ¬èµ·æŒ‰é”®
 	static void PopKey(const UINT VK);
 
-	//·¢ËÍ°´¼ü
+	//å‘é€æŒ‰é”®
 	static void SendKey(const UINT VK, const UINT interval_milliseconds = 0);
 
-	//×èÈûÏß³Ì£¬Ö»µ±°´ÏÂ¸ø¶¨°´¼üºó·µ»Øtrue
+	//é˜»å¡çº¿ç¨‹ï¼Œåªå½“æŒ‰ä¸‹ç»™å®šæŒ‰é”®åè¿”å›true
 	static bool WaitKeyDown(const UINT VK);
 
-	//×èÈûÏß³Ì£¬Ö»µ±Ì§Æğ¸ø¶¨°´¼üºó·µ»Øtrue
+	//é˜»å¡çº¿ç¨‹ï¼Œåªå½“æŠ¬èµ·ç»™å®šæŒ‰é”®åè¿”å›true
 	static bool WaitKeyUp(const UINT VK);
 
-	//×èÈûÏß³Ì£¬·µ»ØµÚÒ»¸ö°´ÏÂµÄ°´¼ü
+	//é˜»å¡çº¿ç¨‹ï¼Œè¿”å›ç¬¬ä¸€ä¸ªæŒ‰ä¸‹çš„æŒ‰é”®
 	static UINT LastKeyDown();
 
-	//×èÈûÏß³Ì£¬·µ»ØµÚÒ»¸öÌ§ÆğµÄ°´¼ü
+	//é˜»å¡çº¿ç¨‹ï¼Œè¿”å›ç¬¬ä¸€ä¸ªæŠ¬èµ·çš„æŒ‰é”®
 	static UINT LastKeyUp();
 
-	//Êó±êÒÆ¶¯µ½¾ø¶Ô×ø±ê
+	//é¼ æ ‡ç§»åŠ¨åˆ°ç»å¯¹åæ ‡
 	static void MoveAbsolute(const UINT x, const UINT y);
 
-	//Êó±êÒÆ¶¯µ½Ïà¶Ô×ø±ê
+	//é¼ æ ‡ç§»åŠ¨åˆ°ç›¸å¯¹åæ ‡
 	static void MoveRelative(const int x, const int y);
 
-	//Ëø¶¨Êó±êÎ»ÖÃ
+	//é”å®šé¼ æ ‡ä½ç½®
 	static void LockMousePosition(const bool isLock);
 private:
 	class Keyborad
@@ -58,7 +58,7 @@ private:
 		InterceptionContext Context;
 		InterceptionDevice  Device;
 	}; 
-	static Keyborad* KeyboradApp;
+	inline static Keyborad* KeyboradApp{nullptr};
 
 	class Mouse
 	{
@@ -73,5 +73,5 @@ private:
 		InterceptionContext Context;
 		InterceptionDevice  Device;
 	}; 
-	static Mouse* MouseApp;
+	inline static Mouse* MouseApp{nullptr};
 };

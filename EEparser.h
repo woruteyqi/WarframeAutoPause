@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include <string>
 class EEparser
@@ -11,8 +11,8 @@ public:
 private:
 	const std::vector<std::pair<std::string, std::string>> VoidTerrains
 	{
-		{"Ðé¿ÕÔ²Ê÷","Sys [Info]: I: /Lotus/Levels/Orokin/CircularHub1.level"},
-		{"Ðé¿ÕµçÌÝ","Sys [Info]: I: /Lotus/Levels/Orokin/LargeTieredIntermediate.level"}
+		{"è™šç©ºåœ†æ ‘","Sys [Info]: I: /Lotus/Levels/Orokin/CircularHub1.level"},
+		{"è™šç©ºç”µæ¢¯","Sys [Info]: I: /Lotus/Levels/Orokin/LargeTieredIntermediate.level"}
 	};
 
 	std::string QueryForLastGenerate() const;

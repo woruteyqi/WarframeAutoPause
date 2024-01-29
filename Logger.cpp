@@ -1,4 +1,4 @@
-#include "Logger.h"
+ï»¿#include "Logger.h"
 #include <chrono>
 #include <ctime>
 void Logger::debug(const std::string&& message)
@@ -35,7 +35,7 @@ const std::string& Logger::GetCurrentTime()
 	tm tm{}; localtime_s(&tm,&time_t);
 
 	static std::string formatTime{};
-	formatTime = std::format("[{}Äê{}ÔÂ{}ÈÕ{:0>2}Ê±{:0>2}·Ö{:0>2}Ãë]",
+	formatTime = std::format("[{}å¹´{}æœˆ{}æ—¥{:0>2}æ—¶{:0>2}åˆ†{:0>2}ç§’]",
 		tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_yday + 1, tm.tm_hour, tm.tm_min, tm.tm_sec);
 	return std::ref(formatTime);
 }
