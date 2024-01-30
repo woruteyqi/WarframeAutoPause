@@ -131,7 +131,7 @@ xcopy /Y "$(ProjectDir)lib\Interception\*.exe" "$(TargetDir)"
     <ResourceCompile Include="WarframeAutoPause.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\墙中人\图标.ico" />
+    <Image Include="图标.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
