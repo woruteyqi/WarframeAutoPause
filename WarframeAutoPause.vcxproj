@@ -115,6 +115,7 @@ xcopy /Y "$(ProjectDir)lib\Interception\*.exe" "$(TargetDir)"
     <ClInclude Include="lib\Interception\interception.h" />
     <ClInclude Include="lib\Op\libop.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\Op\op_x64.lib" />
@@ -125,6 +126,12 @@ xcopy /Y "$(ProjectDir)lib\Interception\*.exe" "$(TargetDir)"
     <None Include="lib\Interception\卸载驱动_右键以管理员身份运行.bat" />
     <None Include="lib\Interception\安装驱动_右键以管理员身份运行.bat" />
     <None Include="lib\Op\op_x64.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WarframeAutoPause.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\墙中人\图标.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

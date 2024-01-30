@@ -3,31 +3,41 @@
 #include "thread"
 void ImageProc::AutoPause()
 {
-	auto sp1{ nor2scr(0.026041666f,0.046296295f) }, sp2{nor2scr(0.078125f,0.23148148f)};
+	auto sp1{ nor2scr(0.026041666f,0.046296295f) }, sp2{nor2scr(0.078125f,0.231481481f)};
 	Logger::debug(std::format("检测区域p1-> X{}，Y{}，p2-> X{}，Y{}\n",sp1.first, sp1.second, sp2.first, sp2.second));
 	int count{0};
 	while (1)
 	{
-		long x{}, y{}, ret{};
-		OP->FindColor(sp1.first, sp1.second, sp2.first, sp2.second, L"B81010-181010",0.7,7,&x,&y, &ret);
-		if (ret)
+		long x{}, y{}, findret{};
+		OP->FindColor(sp1.first, sp1.second, sp2.first, sp2.second, L"881010-181010|B00808-100808",0.9, 0, &x, &y, &findret);
+		if (findret)
 		{
 			Logger::debug(std::format("匹配到颜色，位于X{},Y{}\n", x, y));
-			Beep(880, 500);
-			count++; 
-			Logger::debug(std::format("连续红氧计数：{}\n", count));
-			if (count > 2)
-			{
-				Logger::warning("连续红氧！尝试暂停\n");
-				KeyManager::SendKey(VK_LBUTTON); Logger::debug("发送VK_LBUTTON\n");
-				std::this_thread::sleep_for(std::chrono::milliseconds(500));
-				KeyManager::SendKey(VK_ESCAPE); Logger::debug("发送VK_ESCAPE\n");
-			}
 		}
-		else
+		while (findret) 
 		{
-			count = 0;
-			//Logger::debug("未找到\n");
+			long cmpret{};
+			OP->CmpColor(x, y, L"881010-281010|B00808-100808", 0.3, &cmpret);
+			if (cmpret)
+			{
+				Beep(880, 500);
+				count++;
+				Logger::debug(std::format("连续红氧计数：{}\n", count));
+				if (count > 2)
+				{
+					Logger::warning("连续红氧！尝试暂停\n");
+					KeyManager::SendKey(VK_LBUTTON); Logger::debug("发送VK_LBUTTON\n");
+					std::this_thread::sleep_for(std::chrono::milliseconds(500));
+					KeyManager::SendKey(VK_ESCAPE); Logger::debug("发送VK_ESCAPE\n");
+					std::this_thread::sleep_for(std::chrono::seconds(1));
+				}
+			}
+			else
+			{
+				count = 0;
+				findret = 0;
+				//Logger::debug("未找到\n");
+			}
 		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}

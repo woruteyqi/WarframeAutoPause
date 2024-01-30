@@ -74,6 +74,9 @@
     <ClInclude Include="ImageProc.h">
       <Filter>ImageProc</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\Op\op_x64.lib">
@@ -96,5 +99,15 @@
     <None Include="lib\Interception\卸载驱动_右键以管理员身份运行.bat">
       <Filter>lib\Interception</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WarframeAutoPause.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\墙中人\图标.ico">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>
