@@ -1,7 +1,7 @@
 ﻿#include <sstream>
 #include <fstream>
 #include <chrono>
-#include <initializer_list>
+#include <algorithm>
 #include "EEparser.h"
 #include "Logger.h"
 
@@ -56,16 +56,38 @@ std::string EEparser::QueryForLastGenerate() const
 }
 
 
-std::vector<std::string> EEparser::CheckVoidTerrain() const
+std::vector<std::pair<std::string, int>> EEparser::CheckTerrain() const
 {
 	const std::string lastGenerate{ QueryForLastGenerate() };
-	std::vector<std::string> result{ };
+	std::vector<std::pair<std::string, int>> result{ };
+	size_t IntermediatePos[3]{std::string::npos};
+	IntermediatePos[0] = lastGenerate.find("[Info]: I:");
+	IntermediatePos[1] = lastGenerate.find("[Info]: I:", IntermediatePos[0]+50);
+	IntermediatePos[2] = lastGenerate.find("[Info]: I:", IntermediatePos[1]+50);
+	Logger::debug(std::format("大地形1位置{}，大地形2位置{}，大地形3位置{}\n", IntermediatePos[0], IntermediatePos[1], IntermediatePos[2]));
 	for (const auto& it : VoidTerrains)
 	{
 		auto pos = lastGenerate.find(it.second);
 		if (pos != std::string::npos)
 		{
-			result.push_back(std::string(it.first).append(pos < 250 ? "，在第一个大地形" : "，不在第一个大地形"));
+			Logger::debug(std::format("找到地形位置{}\n", pos));
+			result.push_back({
+				it.first,
+				[&] {
+					if (IntermediatePos[0] != std::string::npos && pos < IntermediatePos[0])
+					{
+						return 1;
+					}
+					if (IntermediatePos[1] != std::string::npos && pos < IntermediatePos[1] && pos > IntermediatePos[0])
+					{
+						return 2;
+					}
+					if (IntermediatePos[2] != std::string::npos && pos < IntermediatePos[2] && pos > IntermediatePos[1])
+					{
+						return 3;
+					}
+					return -1;
+			}() });
 		}
 	}
 	return result;

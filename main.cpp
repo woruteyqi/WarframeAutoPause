@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
 			std::thread([] {
 				Logger::info("开始寻找虚空地形\n");
 				static EEparser ep; 
-				const auto&& Terrains = ep.CheckVoidTerrain();
+				const auto&& Terrains = ep.CheckTerrain();
 				const auto&& GetFreq = [](int HalfSteps)
 				{
 					const int A4{ 440 };
@@ -53,10 +53,24 @@ int main(int argc, char* argv[]) {
 				int count{ 0 };
 				for (const auto& it : Terrains)
 				{
-					Logger::warning(std::format("找到{}\n", it));
-					Beep(GetFreq(3 + count), 500);
-					Beep(GetFreq(7 + count), 500);
-					Beep(GetFreq(10 + count), 500);
+					Logger::warning(std::format("找到{}，在第{}个大地形\n", it.first,it.second));
+					int Root{ GetFreq(3 + count) }, MajorThird{ GetFreq(7 + count) }, PerfectFifth{ GetFreq(10 + count) };
+					Beep(Root, 500);
+					Beep(MajorThird, 500);
+					Beep(PerfectFifth, 500);
+					Beep([&] {
+						switch (it.second)
+						{
+						case 1:
+							return Root;
+						case 2:
+							return MajorThird;
+						case 3:
+							return PerfectFifth;
+						default:
+							return Root;
+						}
+					}(), 500);
 					count ++;
 				}
 			}).detach();

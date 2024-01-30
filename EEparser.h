@@ -7,7 +7,7 @@ public:
 	EEparser();
 	EEparser(std::string Path) :EElogPath(Path) {};
 	~EEparser();
-	std::vector<std::string> CheckVoidTerrain() const;
+	std::vector<std::pair<std::string,int>> CheckTerrain() const;
 private:
 	const std::vector<std::pair<std::string, std::string>> VoidTerrains
 	{
