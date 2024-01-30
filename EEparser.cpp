@@ -17,8 +17,7 @@ EEparser::EEparser()
 		Logger::debug(std::format("EE 路径为：\"{}\"，路径长度 {} 字节\n", EElogPath, EElogPath.size()));
 	}
 	else {
-		Logger::fatal("无法获取系统环境变量 %LocalAppData% 的值，将退出程序！！！\n");
-		exit(-1);
+		Logger::error("无法获取系统环境变量 %LocalAppData% 的值\n");
 	}
 }
 
@@ -31,8 +30,8 @@ std::string EEparser::QueryForLastGenerate() const
 	std::ifstream EElog(EElogPath);
 	if (!EElog)
 	{
-		Logger::fatal("打开EE失败，将退出程序！！！\n");
-		exit(-1);
+		Logger::error("打开EE失败\n");
+		return "";
 	}
 	std::stringstream EE{};
 	EElog.seekg(0, std::ios::end);

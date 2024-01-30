@@ -1,5 +1,5 @@
 ﻿#include "KeyManager.h"
-
+#include "Logger.h"
 void KeyManager::InitKeyborad()
 {
 	if (KeyboradApp == nullptr)
@@ -11,9 +11,17 @@ void KeyManager::InitKeyborad()
 KeyManager::Keyborad::Keyborad()
 {
 	Context = interception_create_context();
+	if (Context == 0)
+	{
+		Logger::fatal("驱动通信失败！！！未安装驱动？\n");
+		Logger::fatal("程序将退出\n");
+		system("pause");
+		exit(0);
+	}
 	interception_set_filter(Context, interception_is_keyboard, INTERCEPTION_FILTER_KEY_ALL);
 	Device = interception_wait(Context);
 	interception_set_filter(Context, interception_is_keyboard, INTERCEPTION_FILTER_KEY_NONE);
+
 }
 
 KeyManager::Keyborad::~Keyborad()
@@ -199,6 +207,13 @@ void KeyManager::InitMouse()
 KeyManager::Mouse::Mouse()
 {
 	Context = interception_create_context();
+	if (Context == 0)
+	{
+		Logger::fatal("驱动通信失败！！！未安装驱动？\n");
+		Logger::fatal("程序将退出\n");
+		system("pause");
+		exit(0);
+	}
 	interception_set_filter(Context, interception_is_mouse, INTERCEPTION_FILTER_MOUSE_ALL);
 	Device = interception_wait(Context);
 	interception_set_filter(Context, interception_is_mouse, INTERCEPTION_FILTER_MOUSE_NONE);
