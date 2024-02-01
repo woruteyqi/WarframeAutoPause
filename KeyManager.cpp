@@ -14,8 +14,8 @@ KeyManager::Keyborad::Keyborad()
 	if (Context == 0)
 	{
 		Logger::fatal("驱动通信失败！！！未安装驱动？\n");
-		Logger::fatal("程序将退出\n");
-		system("pause");
+		Logger::fatal("程序将在3秒后退出\n");
+		std::this_thread::sleep_for(std::chrono::seconds(3));
 		exit(0);
 	}
 	interception_set_filter(Context, interception_is_keyboard, INTERCEPTION_FILTER_KEY_ALL);
@@ -210,8 +210,8 @@ KeyManager::Mouse::Mouse()
 	if (Context == 0)
 	{
 		Logger::fatal("驱动通信失败！！！未安装驱动？\n");
-		Logger::fatal("程序将退出\n");
-		system("pause");
+		Logger::fatal("程序将在3秒后退出\n");
+		std::this_thread::sleep_for(std::chrono::seconds(3));
 		exit(0);
 	}
 	interception_set_filter(Context, interception_is_mouse, INTERCEPTION_FILTER_MOUSE_ALL);

@@ -61,8 +61,8 @@ std::vector<std::pair<std::string, int>> EEparser::CheckTerrain() const
 	std::vector<std::pair<std::string, int>> result{ };
 	size_t IntermediatePos[3]{std::string::npos};
 	IntermediatePos[0] = lastGenerate.find("[Info]: I:");
-	IntermediatePos[1] = lastGenerate.find("[Info]: I:", IntermediatePos[0]+50);
-	IntermediatePos[2] = lastGenerate.find("[Info]: I:", IntermediatePos[1]+50);
+	IntermediatePos[1] = lastGenerate.find("[Info]: I:", IntermediatePos[0] == std::string::npos ? IntermediatePos[0] : IntermediatePos[0] + 50);
+	IntermediatePos[2] = lastGenerate.find("[Info]: I:", IntermediatePos[1] == std::string::npos ? IntermediatePos[1] : IntermediatePos[1] + 50);
 	Logger::debug(std::format("大地形1位置{}，大地形2位置{}，大地形3位置{}\n", IntermediatePos[0], IntermediatePos[1], IntermediatePos[2]));
 	for (const auto& it : VoidTerrains)
 	{
