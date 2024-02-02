@@ -20,11 +20,11 @@ void ImageProc::AutoPause()
 			OP->CmpColor(x, y, L"881010-281010|B00808-100808", 0.3, &cmpret);
 			if (cmpret)
 			{
-				Beep(880, 500);
 				count++;
 				Logger::debug(std::format("连续红氧计数：{}\n", count));
 				if (count > 2)
 				{
+					Beep(880, 1000);
 					Logger::warning("连续红氧！尝试暂停\n");
 					KeyManager::SendKey(VK_LBUTTON); Logger::debug("发送VK_LBUTTON\n");
 					std::this_thread::sleep_for(std::chrono::milliseconds(500));
