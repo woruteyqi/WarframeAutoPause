@@ -10,7 +10,7 @@ void Logger::debug(const std::string&& message)
 
 void Logger::info(const std::string&& message)
 {
-	std::clog << GetCurrentDateAndTime() << "[INFO] " << message;
+	std::clog << GetCurrentDateAndTime() << "\033[32m[INFO]\033[m " << message ;
 }
 
 void Logger::warning(const std::string&& message)
@@ -35,7 +35,14 @@ const std::string& Logger::GetCurrentDateAndTime()
 	tm tm{}; localtime_s(&tm,&time_t);
 
 	static std::string formatTime{};
-	formatTime = std::format("[{}年{}月{}日{:0>2}时{:0>2}分{:0>2}秒]",
-		tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_yday + 1, tm.tm_hour, tm.tm_min, tm.tm_sec);
+	formatTime = std::format("[{}-{}-{} {:0>2}:{:0>2}:{:0>2}.{:0>3}]",
+		tm.tm_year + 1900,
+		tm.tm_mon + 1,
+		tm.tm_mday + 1,
+		tm.tm_hour,
+		tm.tm_min,
+		tm.tm_sec,
+		std::chrono::duration_cast<std::chrono::milliseconds>(currentTime.time_since_epoch()).count() % 1000
+	);
 	return std::ref(formatTime);
 }
