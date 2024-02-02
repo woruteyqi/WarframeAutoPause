@@ -36,9 +36,9 @@ int main(int argc, char* argv[]) {
 			//Logger::debug("抬起RSHIFT\n");
 			Logger::info("漂泊者翻墙\n");
 			KeyManager::PushKey('W'); Logger::debug("PushKey:W\n");
-			KeyManager::SendKey(VK_SPACE); Logger::debug("SendKey:VK_SPACE\n");
-			KeyManager::SendKey(VK_SHIFT); Logger::debug("SendKey:VK_SHIFT\n");
-			KeyManager::SendKey(VK_SPACE); Logger::debug("SendKey:VK_SPACE\n");
+			KeyManager::SendKey(VK_SPACE,10); Logger::debug("SendKey:VK_SPACE\n");
+			KeyManager::SendKey(VK_SHIFT,10); Logger::debug("SendKey:VK_SHIFT\n");
+			KeyManager::SendKey(VK_SPACE,10); Logger::debug("SendKey:VK_SPACE\n");
 			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			KeyManager::PopKey('W'); Logger::debug("PopKey:W\n");
 			break;
