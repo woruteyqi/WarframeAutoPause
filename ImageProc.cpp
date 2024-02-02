@@ -26,9 +26,9 @@ void ImageProc::AutoPause()
 				{
 					Beep(880, 1000);
 					Logger::warning("连续红氧！尝试暂停\n");
-					KeyManager::SendKey(VK_LBUTTON); Logger::debug("发送VK_LBUTTON\n");
+					KeyManager::SendKey(VK_LBUTTON); Logger::debug("SendKey:VK_LBUTTON\n");
 					std::this_thread::sleep_for(std::chrono::milliseconds(500));
-					KeyManager::SendKey(VK_ESCAPE); Logger::debug("发送VK_ESCAPE\n");
+					KeyManager::SendKey(VK_ESCAPE); Logger::debug("SendKey:VK_ESCAPE\n");
 					std::this_thread::sleep_for(std::chrono::seconds(1));
 				}
 			}

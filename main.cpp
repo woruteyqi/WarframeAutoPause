@@ -19,6 +19,7 @@ int main(int argc, char* argv[]) {
 		"注意：游戏应为无边框全屏模式\n"
 		"注意：检测到红氧会发出声音，连续检测红氧3次触发暂停\n\n"
 		"快捷键：\n"
+		"右SHIFT->漂泊者翻墙\n"
 		"U->查询地形（查询到和未查询到有不一样的声音提示）\n"
 		"I->自动开核桃（鼠标点击-回车）循环，使用随机延迟\n"
 		"O->锁定鼠标位置（锁定绝对坐标为第一个核桃位置，禁止相对移动，同时会保持游戏窗口激活并置于顶层）\n"
@@ -31,6 +32,16 @@ int main(int argc, char* argv[]) {
 
 		switch (key)
 		{
+		case VK_RSHIFT:	
+			//Logger::debug("抬起RSHIFT\n");
+			Logger::info("漂泊者翻墙\n");
+			KeyManager::PushKey('W'); Logger::debug("PushKey:W\n");
+			KeyManager::SendKey(VK_SPACE); Logger::debug("SendKey:VK_SPACE\n");
+			KeyManager::SendKey(VK_SHIFT); Logger::debug("SendKey:VK_SHIFT\n");
+			KeyManager::SendKey(VK_SPACE); Logger::debug("SendKey:VK_SPACE\n");
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			KeyManager::PopKey('W'); Logger::debug("PopKey:W\n");
+			break;
 		case 'U':
 			//Logger::debug("抬起U\n");
 			std::thread([] {
@@ -86,9 +97,9 @@ int main(int argc, char* argv[]) {
 					{
 						if (flagOpenRelic)
 						{
-							KeyManager::SendKey(VK_LBUTTON, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("输入VK_LBUTTON\n");
+							KeyManager::SendKey(VK_LBUTTON, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("SendKey:VK_LBUTTON\n");
 							std::this_thread::sleep_for(std::chrono::milliseconds(std::uniform_int_distribution<>(300, 500)(rd)));
-							KeyManager::SendKey(VK_RETURN, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("输入VK_RETURN\n");
+							KeyManager::SendKey(VK_RETURN, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("SendKey:VK_RETURN\n");
 							std::this_thread::sleep_for(std::chrono::milliseconds(std::uniform_int_distribution<>(1500, 3000)(rd)));
 						}
 						else

@@ -44,7 +44,7 @@ void KeyManager::PushKey(const UINT VK)
 		{
 			if (KeyboradApp != nullptr)
 			{
-				KeyboradApp->PushKey(MapVirtualKey(VK, MAPVK_VK_TO_VSC));
+				KeyboradApp->PushKey(MapVirtualKey(VK, MAPVK_VK_TO_VSC_EX));
 			}
 		}
 }
@@ -63,7 +63,7 @@ void KeyManager::PopKey(const UINT VK)
 	{
 		if (KeyboradApp != nullptr)
 		{
-			KeyboradApp->PopKey(MapVirtualKey(VK, MAPVK_VK_TO_VSC));
+			KeyboradApp->PopKey(MapVirtualKey(VK, MAPVK_VK_TO_VSC_EX));
 		}
 	}
 
@@ -85,7 +85,7 @@ bool KeyManager::WaitKeyDown(const UINT VK)
 	{
 		return false;
 	}
-	return KeyboradApp->WaitKey(MapVirtualKey(VK, MAPVK_VK_TO_VSC), false);
+	return KeyboradApp->WaitKey(MapVirtualKey(VK, MAPVK_VK_TO_VSC_EX), false);
 }
 
 bool KeyManager::WaitKeyUp(const UINT VK)
@@ -94,7 +94,7 @@ bool KeyManager::WaitKeyUp(const UINT VK)
 	{
 		return false;
 	}
-	return KeyboradApp->WaitKey(MapVirtualKey(VK, MAPVK_VK_TO_VSC), true);
+	return KeyboradApp->WaitKey(MapVirtualKey(VK, MAPVK_VK_TO_VSC_EX), true);
 }
 
 UINT KeyManager::LastKeyDown()
@@ -108,7 +108,7 @@ UINT KeyManager::LastKeyDown()
 		auto key = KeyboradApp->GetKeyState();
 		if (key.second == InterceptionKeyState::INTERCEPTION_KEY_DOWN)
 		{
-			return MapVirtualKey(key.first, MAPVK_VSC_TO_VK);
+			return MapVirtualKey(key.first, MAPVK_VK_TO_VSC_EX);
 		}
 	}
 }
@@ -124,7 +124,7 @@ UINT KeyManager::LastKeyUp()
 		auto key = KeyboradApp->GetKeyState();
 		if (key.second == InterceptionKeyState::INTERCEPTION_KEY_UP)
 		{
-			return MapVirtualKey(key.first, MAPVK_VSC_TO_VK);
+			return MapVirtualKey(key.first, MAPVK_VSC_TO_VK_EX);
 		}
 	}
 }
