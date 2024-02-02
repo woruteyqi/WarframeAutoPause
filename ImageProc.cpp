@@ -9,7 +9,7 @@ void ImageProc::AutoPause()
 	while (1)
 	{
 		long x{}, y{}, findret{};
-		OP->FindColor(sp1.first, sp1.second, sp2.first, sp2.second, L"881010-181010|B00808-100808",0.9, 0, &x, &y, &findret);
+		OP->FindColor(sp1.first, sp1.second, sp2.first, sp2.second, L"881010-181010|B00808-100808",0.9f, 0, &x, &y, &findret);
 		if (findret)
 		{
 			Logger::debug(std::format("匹配到颜色，位于X{},Y{}\n", x, y));
@@ -17,7 +17,8 @@ void ImageProc::AutoPause()
 		while (findret) 
 		{
 			long cmpret{};
-			OP->CmpColor(x, y, L"881010-281010|B00808-100808", 0.3, &cmpret);
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
+			OP->CmpColor(x, y, L"881010-281010|B00808-100808", 0.3f, &cmpret);
 			if (cmpret)
 			{
 				count++;
