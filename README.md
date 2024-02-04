@@ -16,6 +16,7 @@
 - 查询稳定的挂机地形
 - 自动开核桃
 - 锁定鼠标位置
+- 漂泊者翻越进墙
 
 ## 安全性
 - 使用硬件级别的驱动来进行键鼠操作```驱动拥有正常的签名```，使用你自己的键鼠设备来发送事件，没有凭空多出来的键鼠设备
@@ -25,8 +26,8 @@
 - 在本项目的[Github Release](https://github.com/woruteyqi/WarframeAutoPause/releases)页面上，下载最新的稳定发布版
 - 在本项目的[Github Actions](https://github.com/woruteyqi/WarframeAutoPause/actions)页面上，点击最新的```workflow runs```在下面找到```Artifacts```里面包含最新的自动构建
 
-## 教程
-- todo
+## 教程 
+- todo 
 
 ## 编译
 ### 编译环境
