@@ -13,7 +13,9 @@ private:
 	{
 		{" ⌈虚空⌋ 圆树","Sys [Info]: I: /Lotus/Levels/Orokin/CircularHub1.level"},
 		{" ⌈虚空⌋ 电梯","Sys [Info]: I: /Lotus/Levels/Orokin/LargeTieredIntermediate.level"},
-		{" ⌈天王星⌋ 海底植物实验室","Sys [Info]: I: /Lotus/Levels/GrineerOcean/GrineerOceanIntermediateBotanyLab.level"}
+		{" ⌈火卫二⌋ !仅开核桃! 废弃电梯","Sys [Info]: I: /Lotus/Levels/OrokinDerelict/LargeTeiredRoom1Derelict.level"},
+		{" ⌈火卫二⌋ !仅开核桃! 废弃圆树","Sys [Info]: I: /Lotus/Levels/OrokinDerelict/CircularHub1Derelict.level"},
+		{" ⌈天王星⌋ !仅开核桃! 海底植物实验室","Sys [Info]: I: /Lotus/Levels/GrineerOcean/GrineerOceanIntermediateBotanyLab.level"}
 	};
 
 	std::string QueryForLastGenerate() const;
