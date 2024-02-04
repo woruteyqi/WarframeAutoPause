@@ -30,13 +30,11 @@
 1. 下载好之后解压到一个文件夹里
 2. 右键选择以管理员身份运行`安装驱动_右键以管理员身份运行.bat`，如果正常你会看到下面信息，重启电脑后就可以正常使用
       >
-       ```
           Interception command line installation tool
           Copyright (C) 2008-2018 Francisco Lopes da Silva
           Interception successfully installed. You must reboot for it to take effect.
-       ```
       
-3.双击打开**WarframeAutoPause.exe**，会出现提示`按键盘任意键初始化键盘设备`、`按鼠标任意键或移动位置初始化鼠标设备`，按照提示操作就可以了
+3. 双击打开**WarframeAutoPause.exe**，会出现提示`按键盘任意键初始化键盘设备`、`按鼠标任意键或移动位置初始化鼠标设备`，按照提示操作就可以了
 如果你没有安装驱动就打开，程序将会在10秒后自行退出
 
 ## 编译
