@@ -9,6 +9,7 @@
 #include "KeyManager.h"
 #include "EEparser.h"
 #include "ImageProc.h"
+#include "Core.h"
 int main(int argc, char* argv[]) {
 	Logger::info("按键盘任意键初始化键盘设备\n");
 	KeyManager::InitKeyborad();
@@ -35,113 +36,24 @@ int main(int argc, char* argv[]) {
 		case VK_RSHIFT:	
 			//Logger::debug("抬起RSHIFT\n");
 			Logger::info("漂泊者翻墙\n");
-			KeyManager::PushKey('W'); Logger::debug("PushKey:W\n");
-			KeyManager::SendKey(VK_SPACE,10); Logger::debug("SendKey:VK_SPACE\n");
-			KeyManager::SendKey(VK_SHIFT,10); Logger::debug("SendKey:VK_SHIFT\n");
-			KeyManager::SendKey(VK_SPACE,10); Logger::debug("SendKey:VK_SPACE\n");
-			std::this_thread::sleep_for(std::chrono::milliseconds(500));
-			KeyManager::PopKey('W'); Logger::debug("PopKey:W\n");
+			Core::DrifterIntoWall();
 			break;
 		case 'U':
 			//Logger::debug("抬起U\n");
-			std::thread([] {
-				Logger::info("开始寻找虚空地形\n");
-				static EEparser ep; 
-				const auto&& Terrains = ep.CheckTerrain();
-				const auto&& GetFreq = [](int HalfSteps)
-				{
-					const int A4{ 440 };
-					int Freq{ static_cast<int>(std::pow((float)2, (float)HalfSteps / (float)12) * (float)A4) };
-					Logger::debug(std::format("HalfSteps: {} Freq：{}\n", HalfSteps, Freq));
-					return Freq;
-				};
-				if (Terrains.empty())
-				{
-					Logger::info("未找到地形\n");
-					Beep(GetFreq(5), 250);
-					Beep(GetFreq(-2), 250);
-				}
-				int count{ 0 };
-				for (const auto& it : Terrains)
-				{
-					Logger::warning(std::format("找到{}，在第{}个大地形\n", it.first,it.second));
-					int Root{ GetFreq(3 + count) }, MajorThird{ GetFreq(7 + count) }, PerfectFifth{ GetFreq(10 + count) };
-					Beep(Root, 500);
-					Beep(MajorThird, 500);
-					Beep(PerfectFifth, 500);
-					Beep([&] {
-						switch (it.second)
-						{
-						case 1:
-							return Root;
-						case 2:
-							return MajorThird;
-						case 3:
-							return PerfectFifth;
-						default:
-							return Root;
-						}
-					}(), 500);
-					count ++;
-				}
-			}).detach();
+			Logger::info("开始寻找睡觉地形\n");
+			Core::FindSleepTerrain();
 			break;
 		case 'I':
 			//Logger::debug("抬起I\n");
 			flagOpenRelic = !flagOpenRelic;
 			flagOpenRelic ? Logger::info("开始开核桃\n") : Logger::info("停止开核桃\n");
-			static const auto&& OpenRelic = [] {
-				std::thread([] {
-					std::random_device rd;
-					while (1)
-					{
-						if (flagOpenRelic)
-						{
-							KeyManager::SendKey(VK_LBUTTON, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("SendKey:VK_LBUTTON\n");
-							std::this_thread::sleep_for(std::chrono::milliseconds(std::uniform_int_distribution<>(300, 500)(rd)));
-							KeyManager::SendKey(VK_RETURN, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("SendKey:VK_RETURN\n");
-							std::this_thread::sleep_for(std::chrono::milliseconds(std::uniform_int_distribution<>(1500, 3000)(rd)));
-						}
-						else
-						{
-							std::this_thread::sleep_for(std::chrono::seconds(1));
-						}
-					}
-				}).detach();
-				return 0;
-			}();
+			Core::OpenRelic(flagOpenRelic);
 			break;
 		case 'O':
 			//Logger::debug("抬起O\n");
 			flagLockMouse = !flagLockMouse;
 			flagLockMouse ? Logger::info("锁定鼠标位置\n") : Logger::info("解锁鼠标位置\n");
-			static const auto&& LockMouse = []{
-				std::thread([] {
-					bool locked{false};
-					auto&& pos = ImageProc::nor2scr(0.203125f, 0.25925925f);
-					while (1)
-					{
-						if (flagLockMouse)
-						{
-							if (!locked)
-							{
-								KeyManager::LockMousePosition(true);
-								locked = true;
-							}
-							KeyManager::MoveAbsolute(pos.first, pos.second);//防止回中必须保持移动
-							ImageProc::ActiveWindow();
-						}
-						else if (locked)
-						{
-							KeyManager::LockMousePosition(false);
-							locked = false;
-						}
-						std::random_device rd;
-						std::this_thread::sleep_for(std::chrono::milliseconds(std::uniform_int_distribution<>(500, 1500)(rd)));
-					}
-				}).detach();
-				return 0;
-			}();
+			Core::LockMousePosition(flagLockMouse);
 			break;
 		case 'P':
 			//Logger::debug("抬起P\n");

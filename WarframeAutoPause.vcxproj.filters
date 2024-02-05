@@ -34,6 +34,9 @@
     <Filter Include="ImageProc">
       <UniqueIdentifier>{93f42139-5992-43b5-8543-0e0ae7161be5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{e11fc2d9-c108-40f1-93e2-7556e5371d20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\Interception\interception.c">
@@ -53,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="ImageProc.cpp">
       <Filter>ImageProc</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

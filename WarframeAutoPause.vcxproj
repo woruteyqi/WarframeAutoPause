@@ -101,6 +101,7 @@ xcopy /Y "$(ProjectDir)lib\Interception\*.exe" "$(TargetDir)"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core.cpp" />
     <ClCompile Include="EEparser.cpp" />
     <ClCompile Include="ImageProc.cpp" />
     <ClCompile Include="KeyManager.cpp" />
@@ -109,6 +110,7 @@ xcopy /Y "$(ProjectDir)lib\Interception\*.exe" "$(TargetDir)"
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core.h" />
     <ClInclude Include="EEparser.h" />
     <ClInclude Include="ImageProc.h" />
     <ClInclude Include="KeyManager.h" />
