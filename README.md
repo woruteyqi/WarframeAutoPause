@@ -5,9 +5,11 @@
 [![build](https://github.com/woruteyqi/WarframeAutoPause/actions/workflows/msbuild.yml/badge.svg)](https://github.com/woruteyqi/WarframeAutoPause/actions/workflows/msbuild.yml)
 <details> <summary>点击查看使用截图</summary>
   
-   ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/71299979-419e-4f68-9591-222d17cb565e)
-   
-   ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/4a728d6e-2fc5-4bfe-94bf-8d09720098a9)
+![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/71299979-419e-4f68-9591-222d17cb565e)
+
+![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/c7d83e6d-f693-47fb-9341-1cb687250afb)
+
+![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/4a728d6e-2fc5-4bfe-94bf-8d09720098a9)
    
 </details>
 
@@ -17,6 +19,7 @@
 - 自动开核桃
 - 锁定鼠标位置
 - 漂泊者翻越进墙
+- 定时暂停
 
 ## 安全性
 - 使用硬件级别的驱动来进行键鼠操作```驱动拥有正常的签名```，使用你自己的键鼠设备来发送事件，没有凭空多出来的键鼠设备
@@ -28,15 +31,29 @@
 - 在本项目的[Github Actions](https://github.com/woruteyqi/WarframeAutoPause/actions)页面上，点击最新的```workflow runs```在下面找到```Artifacts```里面包含最新的自动构建
 
 ## 教程 
-1. 下载好之后解压到一个文件夹里
-2. 右键选择以管理员身份运行`安装驱动_右键以管理员身份运行.bat`，如果正常你会看到下面信息，重启电脑后就可以正常使用
-      >
-          Interception command line installation tool
-          Copyright (C) 2008-2018 Francisco Lopes da Silva
-          Interception successfully installed. You must reboot for it to take effect.
-      
-3. 双击打开**WarframeAutoPause.exe**，会出现提示`按键盘任意键初始化键盘设备`、`按鼠标任意键或移动位置初始化鼠标设备`，按照提示操作就可以了
-如果你没有安装驱动就打开，程序将会在10秒后自行退出
+- **如何安装和打开程序**
+    1. 下载好之后解压到一个文件夹里
+    2. 右键选择以管理员身份运行`安装驱动_右键以管理员身份运行.bat`，如果正常你会看到下面信息，重启电脑后就可以正常使用
+    
+        ```
+        Interception command line installation tool
+        Copyright (C) 2008-2018 Francisco Lopes da Silva
+        Interception successfully installed. You must reboot for it to take effect.
+        ```
+    
+    3. 双击打开**WarframeAutoPause.exe**，会出现提示`按键盘任意键初始化键盘设备`、`按鼠标任意键或移动位置初始化鼠标设备`，按照提示操作就可以了,如果你没有安装驱动就打开，程序将会在10秒后自行退出
+
+- **关于定时暂停**
+  1. 使用方式1：`右键程序->创建快捷方式`，对刚才创建好的快捷方式`右键->属性`找到`目标`在后面添加` -h 小时 -m 分钟`，当你仅设置小时的时候可以忽略-m及后面的参数
+      > 例： ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/17b4edf9-7fd6-4127-a89b-365e77b3f85d)
+  2. 使用方式2: 在程序目录下按住 `SHIFT` + `鼠标右键` 找到 `在终端中打开` 或者 `在此处打开PowerShell窗口` 任选一个
+      > 例： ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/4a12d308-35b9-4ac4-82fa-d5622c4034e1)
+
+     然后进入你打开的窗口在这个窗口按`TAB`直到出现了程序的名字`WarframeAutoPause.exe` 在后面添加` -h 小时 -m 分钟`然后按`回车键`运行即可
+
+      > 例： ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/d90c6939-8bf9-4d18-a417-21534454fea1)
+
+
 
 ## 编译
 ### 编译环境
