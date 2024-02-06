@@ -73,9 +73,9 @@ void Core::OpenRelic(bool& flag)
 				cv.wait(lock, [&] {return flag; });
 				std::random_device rd;
 				KeyManager::SendKey(VK_LBUTTON, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("SendKey:VK_LBUTTON\n");
-				std::this_thread::sleep_for(std::chrono::milliseconds(std::uniform_int_distribution<>(300, 500)(rd)));
+				cv.wait_for(lock, std::chrono::milliseconds(std::uniform_int_distribution<>(300, 500)(rd)), [&] {return !flag; });
 				KeyManager::SendKey(VK_RETURN, std::uniform_int_distribution<>(20, 50)(rd)); Logger::debug("SendKey:VK_RETURN\n");
-				std::this_thread::sleep_for(std::chrono::milliseconds(std::uniform_int_distribution<>(1500, 3000)(rd)));
+				cv.wait_for(lock, std::chrono::milliseconds(std::uniform_int_distribution<>(1500, 3000)(rd)), [&] {return !flag; });
 				lock.unlock();
 			}
 		}).detach();
@@ -111,14 +111,20 @@ void Core::LockMousePosition(bool& flag)
 				}
 				//防止回中必须保持移动
 				std::random_device rd;
-				cv.wait_for(lock, std::chrono::milliseconds(std::uniform_int_distribution<>(1000, 5000)(rd)), [&] {
-					KeyManager::MoveAbsolute(pos.first, pos.second);
-					ImageProc::ActiveWindow();
-					return !flag;
-				});
+				KeyManager::MoveAbsolute(pos.first, pos.second); Logger::debug(std::format("MoveAbsolute: {}, {}\n", pos.first, pos.second));
+				ImageProc::ActiveWindow();
+				cv.wait_for(lock, std::chrono::milliseconds(std::uniform_int_distribution<>(5000, 10000)(rd)), [&] { return !flag; });
 				lock.unlock();
 			}
 		}).detach();
+		return 0;
+	}();
+}
+
+void Core::AutoPause()
+{
+	static const auto&& AutoPause = []() {
+		std::thread(ImageProc::AutoPause).detach();
 		return 0;
 	}();
 }

@@ -6,5 +6,6 @@ public:
 	static void FindSleepTerrain();
 	static void OpenRelic(bool& flag);
 	static void LockMousePosition(bool& flag);
+	static void AutoPause();
 };
 
