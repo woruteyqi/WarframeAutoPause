@@ -10,8 +10,10 @@ void Core::DrifterIntoWall()
 {
 	KeyManager::PushKey('W'); Logger::debug("PushKey:W\n");
 	KeyManager::SendKey(VK_SPACE, 10); Logger::debug("SendKey:VK_SPACE\n");
+	std::this_thread::sleep_for(std::chrono::milliseconds(5));
 	KeyManager::SendKey(VK_SHIFT, 10); Logger::debug("SendKey:VK_SHIFT\n");
-	KeyManager::SendKey(VK_SPACE, 10); Logger::debug("SendKey:VK_SPACE\n");
+	std::this_thread::sleep_for(std::chrono::milliseconds(5));
+	KeyManager::SendKey(VK_SPACE, 30); Logger::debug("SendKey:VK_SPACE\n");
 	std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	KeyManager::PopKey('W'); Logger::debug("PopKey:W\n");
 }
