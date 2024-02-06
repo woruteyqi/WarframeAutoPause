@@ -128,3 +128,68 @@ void Core::AutoPause()
 		return 0;
 	}();
 }
+
+void Core::Commander(int argc, char* argv[])
+{
+	Logger::debug(std::format("argc:{}\n", argc));
+	if (argc < 3) return;
+	int hours{}, minutes{};
+	switch (argc)
+	{
+	case 3:
+		Logger::debug(std::format("命令 {}，参数 {}\n", argv[1], argv[2]));
+		
+		if (strcmp(argv[1], "-H") && strcmp(argv[1],"-h"))
+		{
+			Logger::error(std::format("指令错误，在 \033[4m{}\033[m\n", argv[1])); return;
+		}
+		hours = atoi(argv[2]);
+		if (hours <= 0 || hours >= 24)
+		{
+			Logger::error(std::format("参数错误，在 \033[4m{}\033[m\n", argv[2])); return;
+		}
+		break;
+	case 5:
+		Logger::debug(std::format("命令1 {}，参数1 {} | 命令2 {}，参数2 {}\n",argv[1], argv[2], argv[3], argv[4]));
+
+		if (strcmp(argv[1], "-H") && strcmp(argv[1], "-h"))
+		{
+			Logger::error(std::format("指令错误，在 \033[4m{}\033[m\n", argv[1])); return;
+		}
+		hours = atoi(argv[2]);
+		if (hours < 0 || hours >= 24)
+		{
+			Logger::error(std::format("参数错误，在 \033[4m{}\033[m\n", argv[2])); return;
+		}
+
+		if (strcmp(argv[3], "-M") && strcmp(argv[3], "-m"))
+		{
+			Logger::error(std::format("指令错误，在 \033[4m{}\033[m\n", argv[3])); return;
+		}
+		minutes = atoi(argv[4]);
+		if (minutes <= 0 || minutes >= 24)
+		{
+			Logger::error(std::format("参数错误，在 \033[4m{}\033[m\n", argv[4])); return;
+		}
+		break;
+	default:
+		Logger::error("启动参数错误\n");
+		break;
+	}
+	
+	static const auto StopDuration{ std::chrono::hours(hours) + std::chrono::minutes(minutes)};
+	const auto StopTime{ std::chrono::system_clock::now() + StopDuration };
+	const auto StopTime_t{ std::chrono::system_clock::to_time_t(StopTime) };
+	tm tm{}; localtime_s(&tm, &StopTime_t);
+	Logger::info(std::format("程序将在{}小时{}分钟后 ⌈{}⌋ 执行定时暂停\n", hours, minutes,
+		std::format("{}年{}月{}日 {:0>2}时{:0>2}分{:0>2}秒",tm.tm_year + 1900,tm.tm_mon + 1,tm.tm_mday, tm.tm_hour,tm.tm_min,tm.tm_sec)));
+
+	std::thread([&] {
+		Logger::debug(std::format("StopDuration:{}\n", StopDuration.count()));
+		std::this_thread::sleep_for(StopDuration);
+		Logger::warning("到达定时！尝试暂停\n");
+		KeyManager::SendKey(VK_LBUTTON); Logger::debug("SendKey:VK_LBUTTON\n");
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		KeyManager::SendKey(VK_ESCAPE); Logger::debug("SendKey:VK_ESCAPE\n");
+	}).detach();
+}

@@ -7,5 +7,6 @@ public:
 	static void OpenRelic(bool& flag);
 	static void LockMousePosition(bool& flag);
 	static void AutoPause();
+	static void Commander(int argc,char* argv[]);
 };
 

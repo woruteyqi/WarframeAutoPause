@@ -30,15 +30,15 @@ void Logger::fatal(const std::string&& message)
 
 const std::string& Logger::GetCurrentDateAndTime()
 {
-	auto currentTime = std::chrono::system_clock::now();
-	auto time_t = std::chrono::system_clock::to_time_t(currentTime);
+	const auto currentTime = std::chrono::system_clock::now();
+	const auto time_t = std::chrono::system_clock::to_time_t(currentTime);
 	tm tm{}; localtime_s(&tm,&time_t);
 
 	static std::string formatTime{};
 	formatTime = std::format("[{}-{}-{} {:0>2}:{:0>2}:{:0>2}.{:0>3}]",
 		tm.tm_year + 1900,
 		tm.tm_mon + 1,
-		tm.tm_mday + 1,
+		tm.tm_mday,
 		tm.tm_hour,
 		tm.tm_min,
 		tm.tm_sec,

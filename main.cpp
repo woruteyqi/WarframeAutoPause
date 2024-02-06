@@ -7,6 +7,7 @@ int main(int argc, char* argv[]) {
 	KeyManager::InitKeyborad();
 	Logger::info("按鼠标任意键或移动位置初始化鼠标设备\n");
 	KeyManager::InitMouse();
+	Core::Commander(argc, argv);
 	Core::AutoPause();
 	Logger::info("红氧暂停已开启\n"
 		"注意：请将地图模式调整为全屏地图（选项>界面>以叠层地图显示，或者默认按M键切换）\n"

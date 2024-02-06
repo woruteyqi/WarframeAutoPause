@@ -42,7 +42,7 @@ std::string EEparser::QueryForLastGenerate() const
 	
 	auto begin = std::chrono::high_resolution_clock::now();
 	std::string Buffer;
-	Buffer.resize(((long)EElog.tellg()));
+	Buffer.resize(fileSize);
 	EElog.seekg(0, std::ios::beg);
 	EElog.read(&Buffer[0], fileSize);
 	auto end = std::chrono::high_resolution_clock::now();
@@ -71,28 +71,28 @@ std::vector<std::pair<std::string, int>> EEparser::CheckTerrain() const
 	if (lastGenerate.empty()) return result;
 
 	size_t IntermediatePos[3]{std::string::npos};
-	IntermediatePos[0] = lastGenerate.find("[Info]: I:");
-	IntermediatePos[1] = lastGenerate.find("[Info]: I:", IntermediatePos[0] == std::string::npos ? IntermediatePos[0] : IntermediatePos[0] + 50);
-	IntermediatePos[2] = lastGenerate.find("[Info]: I:", IntermediatePos[1] == std::string::npos ? IntermediatePos[1] : IntermediatePos[1] + 50);
+	IntermediatePos[0] = lastGenerate.find("Sys [Info]: I:");
+	IntermediatePos[1] = lastGenerate.find("Sys [Info]: I:", IntermediatePos[0] == std::string::npos ? IntermediatePos[0] : IntermediatePos[0] + 50);
+	IntermediatePos[2] = lastGenerate.find("Sys [Info]: I:", IntermediatePos[1] == std::string::npos ? IntermediatePos[1] : IntermediatePos[1] + 50);
 	Logger::debug(std::format("大地形1位置{}，大地形2位置{}，大地形3位置{}\n", IntermediatePos[0], IntermediatePos[1], IntermediatePos[2]));
-	for (const auto& it : VoidTerrains)
+	for (const auto& it : SleepTerrains)
 	{
 		auto pos = lastGenerate.find(it.second);
 		if (pos != std::string::npos)
 		{
-			Logger::debug(std::format("找到地形位置{}\n", pos));
+			Logger::debug(std::format("找到睡觉地形，位置{}\n", pos));
 			result.push_back({
 				it.first,
 				[&] {
-					if (IntermediatePos[0] != std::string::npos && pos < IntermediatePos[0])
+					if (IntermediatePos[0] != std::string::npos && pos == IntermediatePos[0])
 					{
 						return 1;
 					}
-					if (IntermediatePos[1] != std::string::npos && pos < IntermediatePos[1] && pos > IntermediatePos[0])
+					if (IntermediatePos[1] != std::string::npos && pos == IntermediatePos[1])
 					{
 						return 2;
 					}
-					if (IntermediatePos[2] != std::string::npos && pos < IntermediatePos[2] && pos > IntermediatePos[1])
+					if (IntermediatePos[2] != std::string::npos && pos == IntermediatePos[2])
 					{
 						return 3;
 					}

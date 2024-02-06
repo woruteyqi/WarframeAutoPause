@@ -9,7 +9,7 @@ public:
 	~EEparser();
 	std::vector<std::pair<std::string,int>> CheckTerrain() const;
 private:
-	const std::vector<std::pair<std::string, std::string>> VoidTerrains
+	const std::vector<std::pair<std::string, std::string>> SleepTerrains
 	{
 		{" ⌈虚空⌋ 圆树","Sys [Info]: I: /Lotus/Levels/Orokin/CircularHub1.level"},
 		{" ⌈虚空⌋ 电梯","Sys [Info]: I: /Lotus/Levels/Orokin/LargeTieredIntermediate.level"},
