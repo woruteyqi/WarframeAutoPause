@@ -1,5 +1,5 @@
-﻿#include <sstream>
-#include <fstream>
+﻿#include <fstream>
+#include <filesystem>
 #include <chrono>
 #include <algorithm>
 #include "EEparser.h"
@@ -27,38 +27,49 @@ EEparser::~EEparser()
 
 std::string EEparser::QueryForLastGenerate() const 
 {
-	std::ifstream EElog(EElogPath);
+	auto currentPath = std::filesystem::current_path() / "EE.log";
+	std::filesystem::copy_file(EElogPath, currentPath,std::filesystem::copy_options::overwrite_existing);
+	Logger::debug(std::format("从{}复制到{}\n", EElogPath, currentPath.string()));
+	std::ifstream EElog(currentPath);
 	if (!EElog)
 	{
 		Logger::error("打开EE失败\n");
 		return "";
 	}
-	std::stringstream EE{};
 	EElog.seekg(0, std::ios::end);
-	Logger::debug(std::format("EE大小：{}字节，{:.2f}MB\n", (long)EElog.tellg(), (long)EElog.tellg() / 1024.0f / 1024.0f));
-	EElog.seekg(0, std::ios::beg);
+	long fileSize{ (long)EElog.tellg() };
+	Logger::debug(std::format("EE大小：{}字节，{:.2f}MB\n", fileSize, fileSize / 1024.0f / 1024.0f));
+	
 	auto begin = std::chrono::high_resolution_clock::now();
-	EE << EElog.rdbuf();
+	std::string Buffer;
+	Buffer.resize(((long)EElog.tellg()));
+	EElog.seekg(0, std::ios::beg);
+	EElog.read(&Buffer[0], fileSize);
 	auto end = std::chrono::high_resolution_clock::now();
 	Logger::debug(std::format("读取EE文件耗时：{}\n", std::chrono::duration_cast<std::chrono::milliseconds>(end - begin)));
-	auto str = EE.str();
-	auto lastpos = str.rfind("Sys [Info]: Generated layout in");
-	lastpos = str.rfind("\n", lastpos);
-	Logger::debug(std::format("最后一次地形生成开始位置：{}\n", lastpos));
-	auto endpos = str.find("Sys [Info]: \n", lastpos + 100);
-	endpos = str.find("\n", endpos);
-	Logger::debug(std::format("最后一次地形生成终止位置：{}\n", endpos));
-	auto sub = str.substr(lastpos, endpos - lastpos);
-	Logger::debug(std::format("最后一次地形生成的信息：{}\n", sub));
 	EElog.close();
-	return sub;
+	std::filesystem::remove(currentPath);
+	Logger::debug(std::format("读取完成，删除临时文件{}\n", currentPath.string()));
+
+	auto lastpos = Buffer.rfind("Sys [Info]: Generated layout in");
+	lastpos = Buffer.rfind("\n", lastpos);
+	Logger::debug(std::format("最后一次地形生成开始位置：{}\n", lastpos));
+	auto endpos = Buffer.find("Sys [Info]: \n", lastpos + 100);
+	endpos = Buffer.find("\n", endpos);
+	Logger::debug(std::format("最后一次地形生成终止位置：{}\n", endpos));
+	auto LastGenerate = Buffer.substr(lastpos, endpos - lastpos);
+	Logger::debug(std::format("最后一次地形生成的信息：{}\n", LastGenerate));
+	
+	return LastGenerate;
 }
 
 
 std::vector<std::pair<std::string, int>> EEparser::CheckTerrain() const
 {
-	const std::string lastGenerate{ QueryForLastGenerate() };
 	std::vector<std::pair<std::string, int>> result{ };
+	const std::string lastGenerate{ QueryForLastGenerate() };
+	if (lastGenerate.empty()) return result;
+
 	size_t IntermediatePos[3]{std::string::npos};
 	IntermediatePos[0] = lastGenerate.find("[Info]: I:");
 	IntermediatePos[1] = lastGenerate.find("[Info]: I:", IntermediatePos[0] == std::string::npos ? IntermediatePos[0] : IntermediatePos[0] + 50);
