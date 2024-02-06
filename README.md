@@ -5,7 +5,7 @@
 [![build](https://github.com/woruteyqi/WarframeAutoPause/actions/workflows/msbuild.yml/badge.svg)](https://github.com/woruteyqi/WarframeAutoPause/actions/workflows/msbuild.yml)
 <details> <summary>点击查看使用截图</summary>
   
-   ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/a9e1ff93-42d9-4505-a3e2-e3f127eb9078)
+   ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/71299979-419e-4f68-9591-222d17cb565e)
    
    ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/4a728d6e-2fc5-4bfe-94bf-8d09720098a9)
    
