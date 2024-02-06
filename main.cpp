@@ -1,22 +1,15 @@
-﻿#include <iostream>
-#include <fstream>
-#include <vector>
-#include <thread>
-#include <random>
-#include <cmath>
-#include <Windows.h>
-#include "Logger.h"
+﻿#include "Logger.h"
 #include "KeyManager.h"
-#include "EEparser.h"
-#include "ImageProc.h"
 #include "Core.h"
+
 int main(int argc, char* argv[]) {
 	Logger::info("按键盘任意键初始化键盘设备\n");
 	KeyManager::InitKeyborad();
 	Logger::info("按鼠标任意键或移动位置初始化鼠标设备\n");
 	KeyManager::InitMouse();
 	Core::AutoPause();
-	Logger::info("红氧暂停已开启，请将地图模式调整为全屏地图（选项>界面>以叠层地图显示，或者默认按M键切换）\n"
+	Logger::info("红氧暂停已开启\n"
+		"注意：请将地图模式调整为全屏地图（选项>界面>以叠层地图显示，或者默认按M键切换）\n"
 		"注意：游戏应为无边框全屏模式\n"
 		"注意：连续检测红氧3次触发暂停且发出声音\n\n"
 		"快捷键：\n"

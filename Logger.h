@@ -14,5 +14,8 @@ public:
 	static void fatal(const std::string&& message);
 private:
 	const static std::string& GetCurrentDateAndTime();
-	inline static const int ConsoleCp{ (SetConsoleCP(65001) && SetConsoleOutputCP(65001)) ?  65001 : -1};//仅用于在main函数前改变控制台代码页
+	inline static const int Init{ [] {
+		std::ios::sync_with_stdio(false);
+		return (SetConsoleCP(65001) && SetConsoleOutputCP(65001)) ? 65001 : -1; }() 
+	};//仅用于在main函数前初始化
 };
