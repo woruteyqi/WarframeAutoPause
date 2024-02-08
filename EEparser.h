@@ -17,8 +17,8 @@ private:
 		{" ⌈火卫二⌋ !仅开核桃! 废弃圆树","Sys [Info]: I: /Lotus/Levels/OrokinDerelict/CircularHub1Derelict.level"},
 		{" ⌈天王星⌋ !仅开核桃! 海底植物实验室","Sys [Info]: I: /Lotus/Levels/GrineerOcean/GrineerOceanIntermediateBotanyLab.level"}
 	};
-
-	std::string QueryForLastGenerate() const;
 	std::string EElogPath;
+
+	std::pair<std::string,long long> QueryForLastGenerate() const;
 };
 

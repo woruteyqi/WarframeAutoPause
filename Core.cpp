@@ -113,7 +113,8 @@ void Core::LockMousePosition(bool& flag)
 				}
 				//防止回中必须保持移动
 				std::random_device rd;
-				KeyManager::MoveAbsolute(pos.first, pos.second); Logger::debug(std::format("MoveAbsolute: {}, {}\n", pos.first, pos.second));
+				KeyManager::MoveAbsolute(pos.first, pos.second);
+				//Logger::debug(std::format("MoveAbsolute: {}, {}\n", pos.first, pos.second));
 				ImageProc::ActiveWindow();
 				cv.wait_for(lock, std::chrono::milliseconds(std::uniform_int_distribution<>(5000, 10000)(rd)), [&] { return !flag; });
 				lock.unlock();
