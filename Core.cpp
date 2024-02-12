@@ -32,7 +32,7 @@ void Core::FindSleepTerrain()
 			};
 		if (Terrains.empty())
 		{
-			Logger::info("未找到地形\n");
+			Logger::info("未找到睡觉地形\n");
 			Beep(GetFreq(5), 250);
 			Beep(GetFreq(-2), 250);
 		}

@@ -1,6 +1,5 @@
 ﻿#include "Logger.h"
 #include <chrono>
-#include <ctime>
 void Logger::debug(const std::string&& message)
 {
 #ifdef _DEBUG

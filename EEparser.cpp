@@ -53,7 +53,7 @@ std::pair<std::string, long long> EEparser::QueryForLastGenerate() const
 	
 	auto ftime_begin{ Buffer.find("Current time: ") + 14 };
 	auto ftime_end{ ftime_begin };
-	for (size_t i{};i<6;i++) ftime_end = Buffer.find(' ', ftime_end + 1);
+	for (size_t i{};i<5;i++) ftime_end = Buffer.find(' ', ftime_end + 1);
 	auto start_time{ Buffer.substr(ftime_begin, ftime_end - ftime_begin) };
 	Logger::debug(std::format("time_string:{}\n", start_time));
 	std::tm timeInfo = {};
@@ -80,11 +80,11 @@ std::pair<std::string, long long> EEparser::QueryForLastGenerate() const
 std::vector<std::pair<std::string, int>> EEparser::CheckTerrain() const
 {
 	std::vector<std::pair<std::string, int>> result{ };
-	auto generate{ QueryForLastGenerate() };
-	const std::string lastGenerate{ generate.first };
+	auto info{ QueryForLastGenerate() };
+	const std::string lastGenerate{ info.first };
 	if (lastGenerate.empty()) return result;
 
-	std::chrono::system_clock::time_point timePoint = std::chrono::system_clock::from_time_t(generate.second);
+	std::chrono::system_clock::time_point timePoint = std::chrono::system_clock::from_time_t(info.second);
 	std::time_t time = std::chrono::system_clock::to_time_t(timePoint);
 	std::tm tm{}; localtime_s(&tm, &time);
 	Logger::info(std::format("最后一次地形生成于 ⌈{}⌋\n",
