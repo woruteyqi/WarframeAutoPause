@@ -155,19 +155,17 @@ void Core::Commander(int argc, char* argv[])
 		Logger::debug("empty\n");
 		Logger::debug(std::format("currentPath: {}\n", currentPath.string()));
 
+		//随机新进程名
 		const std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 		const auto charactersLength = characters.length();
-
 		std::random_device rd;
 		std::mt19937 generator(rd());
 		std::uniform_int_distribution<size_t> distribution(0, charactersLength - 1);
-
 		std::string randomFileName;
 		for (int i = 0; i < 10; ++i) {
 			randomFileName += characters[distribution(generator)];
 		}
 		randomFileName += ".exe";
-
 		Logger::debug(std::format("randomFileName: {}\n", randomFileName));
 		fs::path copyPath = currentPath.parent_path() / randomFileName;
 		Logger::debug(std::format("copyPath: {}\n", copyPath.string()));
@@ -176,27 +174,23 @@ void Core::Commander(int argc, char* argv[])
 		destFile << sourceFile.rdbuf() << randomFileName;
 		sourceFile.close();
 		destFile.close();
-		std::string commandLine{ std::format("-h {} -m {} -l {}",hours,minutes,currentPath.string()) };
 
 		// 启动新进程
-		STARTUPINFOA si;
-		PROCESS_INFORMATION pi;
-
-		ZeroMemory(&si, sizeof(si));
+		STARTUPINFOA si{};
+		PROCESS_INFORMATION pi{};
 		si.cb = sizeof(si);
-		ZeroMemory(&pi, sizeof(pi));
-
+		std::string commandLine{ std::format(" -h {} -m {} -l {}",hours,minutes,currentPath.string()) };
 		CreateProcessA(
-			copyPath.string().c_str(),                           // 模块名，使用可执行文件路径
-			const_cast<char*>(commandLine.c_str()), // 命令行
-			NULL,                           // 进程安全描述符
-			NULL,                           // 线程安全描述符
-			FALSE,                          // 继承句柄标志
-			CREATE_NEW_CONSOLE,             // 创建标志
-			NULL,                           // 使用父进程的环境变量
-			NULL,                           // 使用父进程的当前目录
-			&si,                            // 启动信息
-			&pi                             // 进程信息
+			copyPath.string().c_str(),          
+			const_cast<char*>(commandLine.c_str()),
+			NULL,                           
+			NULL,                         
+			FALSE,                     
+			CREATE_NEW_CONSOLE,           
+			NULL,                          
+			NULL,                      
+			&si,                        
+			&pi                         
 		);
 		CloseHandle(pi.hProcess);
 		CloseHandle(pi.hThread);
@@ -207,7 +201,8 @@ void Core::Commander(int argc, char* argv[])
 		Logger::debug(std::format("last_path: {}\n",last_path));
 		fs::remove(last_path);
 	}
-	if (!minutes && ! hours) return;
+
+	if (minutes<=0 && hours<=0) return;
 	static const auto StopDuration{ std::chrono::hours(hours) + std::chrono::minutes(minutes)};
 	const auto StopTime{ std::chrono::system_clock::now() + StopDuration };
 	const auto StopTime_t{ std::chrono::system_clock::to_time_t(StopTime) };
