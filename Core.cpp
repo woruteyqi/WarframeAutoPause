@@ -206,7 +206,6 @@ void Core::Commander(int argc, char* argv[])
 	{
 		Logger::debug(std::format("last_path: {}\n",last_path));
 		fs::remove(last_path);
-		SetConsoleTitleA(currentPath.filename().string().c_str());
 	}
 	if (!minutes && ! hours) return;
 	static const auto StopDuration{ std::chrono::hours(hours) + std::chrono::minutes(minutes)};
