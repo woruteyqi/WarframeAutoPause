@@ -1,5 +1,7 @@
 ﻿#include <random>
 #include <mutex>
+#include <filesystem>
+#include <fstream>
 #include <condition_variable>
 #include "Core.h"
 #include "KeyManager.h"
@@ -133,16 +135,79 @@ void Core::AutoPause()
 	}();
 }
 
+
+
 void Core::Commander(int argc, char* argv[])
 {
 	Logger::debug(std::format("argc:{}\n", argc));
 	cmdline::parser p{};
-	p.add<int>("hour", 'h', "需要暂停的小时数[0,23]", false, 0,cmdline::range(1,23));
-	p.add<int>("minute", 'm', "需要暂停的分钟数[1,59]", true, 1, cmdline::range(1, 59));
+	p.add<int>("hour", 'h', "需要暂停的小时数[0,23]", false, 0,cmdline::range(0,23));
+	p.add<int>("minute", 'm', "需要暂停的分钟数[1,59]", false, 0, cmdline::range(0, 59));
+	p.add<std::string>("last_path", 'l',"原始文件目录",false,"");
 
 	p.parse_check(argc,argv);
+	std::string last_path{ p.get<std::string>("last_path") };
 	int hours{p.get<int>("hour")}, minutes{p.get<int>("minute")};
 
+	namespace fs = std::filesystem;
+	fs::path currentPath = fs::absolute(fs::path(argv[0]));
+	if (last_path.empty()) {
+		Logger::debug("empty\n");
+		Logger::debug(std::format("currentPath: {}\n", currentPath.string()));
+		srand(static_cast<unsigned int>(time(nullptr)));
+
+		const std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		const auto charactersLength = characters.length();
+
+		std::random_device rd;
+		std::mt19937 generator(rd());
+		std::uniform_int_distribution<size_t> distribution(0, charactersLength - 1);
+
+		std::string randomFileName;
+		for (int i = 0; i < 10; ++i) {
+			randomFileName += characters[distribution(generator)];
+		}
+		randomFileName += ".exe";
+
+		Logger::debug(std::format("randomFileName: {}\n", randomFileName));
+		fs::path copyPath = currentPath.parent_path() / randomFileName;
+		Logger::debug(std::format("copyPath: {}\n", copyPath.string()));
+		std::ifstream sourceFile(currentPath, std::ios::binary);
+		std::ofstream destFile(copyPath, std::ios::binary);
+		destFile << sourceFile.rdbuf();
+		sourceFile.close();
+		destFile.close();
+		std::string commandLine{ std::format("{} -h {} -m {} -l {}",copyPath.string(),hours,minutes,currentPath.string()) };
+
+		// 启动新进程
+		STARTUPINFOA si;
+		PROCESS_INFORMATION pi;
+
+		ZeroMemory(&si, sizeof(si));
+		si.cb = sizeof(si);
+		ZeroMemory(&pi, sizeof(pi));
+
+		CreateProcessA(
+			NULL,                           // 模块名，使用可执行文件路径
+			const_cast<char*>(commandLine.c_str()), // 命令行
+			NULL,                           // 进程安全描述符
+			NULL,                           // 线程安全描述符
+			FALSE,                          // 继承句柄标志
+			0,                              // 创建标志
+			NULL,                           // 使用父进程的环境变量
+			NULL,                           // 使用父进程的当前目录
+			&si,                            // 启动信息
+			&pi                             // 进程信息
+		);
+		exit(0);
+	}
+	else
+	{
+		Logger::debug(std::format("last_path: {}\n",last_path));
+		fs::remove(last_path);
+		SetConsoleTitleA(currentPath.filename().string().c_str());
+	}
+	if (!minutes && ! hours) return;
 	static const auto StopDuration{ std::chrono::hours(hours) + std::chrono::minutes(minutes)};
 	const auto StopTime{ std::chrono::system_clock::now() + StopDuration };
 	const auto StopTime_t{ std::chrono::system_clock::to_time_t(StopTime) };

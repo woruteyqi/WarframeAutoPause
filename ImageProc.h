@@ -17,16 +17,6 @@ public:
 		int screenWidth = GetSystemMetrics(SM_CXSCREEN), int screenHeight = GetSystemMetrics(SM_CYSCREEN));
 private:
 	inline static libop* OP = new libop();
-	inline static long WfGameWindow{ [] {
-		long ret{};
-		OP->FindWindowByProcess(L"Warframe.x64.exe",L"", L"Warframe",&ret);
-		Logger::debug(std::format("游戏窗口句柄：{:X}\n", ret));
-		if (!ret)
-		{
-			Logger::error("游戏窗口句柄获取失败，激活游戏窗口功能失效\n");
-		}
-		return ret;
-		}()
-	};
+	inline static long WfGameWindow = 0;
 };
 
