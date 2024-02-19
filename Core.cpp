@@ -174,7 +174,7 @@ void Core::Commander(int argc, char* argv[])
 		Logger::debug(std::format("copyPath: {}\n", copyPath.string()));
 		std::ifstream sourceFile(currentPath, std::ios::binary);
 		std::ofstream destFile(copyPath, std::ios::binary);
-		destFile << sourceFile.rdbuf();
+		destFile << sourceFile.rdbuf() << randomFileName;
 		sourceFile.close();
 		destFile.close();
 		std::string commandLine{ std::format("{} -h {} -m {} -l {}",copyPath.string(),hours,minutes,currentPath.string()) };
