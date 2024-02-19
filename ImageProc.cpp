@@ -3,10 +3,9 @@
 #include "thread"
 void ImageProc::AutoPause()
 {
-	long ret{};
-	OP->FindWindowByProcess(L"Warframe.x64.exe", L"", L"Warframe", &ret);
-	Logger::debug(std::format("游戏窗口句柄：{:X}\n", ret));
-	if (!ret)
+	OP->FindWindowByProcess(L"Warframe.x64.exe", L"", L"Warframe", &WfGameWindow);
+	Logger::debug(std::format("游戏窗口句柄：{:X}\n", WfGameWindow));
+	if (!WfGameWindow)
 	{
 		Logger::error("游戏窗口句柄获取失败，激活游戏窗口功能失效\n");
 	}
