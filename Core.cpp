@@ -6,6 +6,7 @@
 #include "Logger.h"
 #include "EEparser.h"
 #include "ImageProc.h"
+#include "cmdline.h"
 void Core::DrifterIntoWall()
 {
 	KeyManager::PushKey('W'); Logger::debug("PushKey:W\n");
@@ -135,51 +136,13 @@ void Core::AutoPause()
 void Core::Commander(int argc, char* argv[])
 {
 	Logger::debug(std::format("argc:{}\n", argc));
-	if (argc < 3) return;
-	int hours{}, minutes{};
-	switch (argc)
-	{
-	case 3:
-		Logger::debug(std::format("命令 {}，参数 {}\n", argv[1], argv[2]));
-		
-		if (strcmp(argv[1], "-H") && strcmp(argv[1],"-h"))
-		{
-			Logger::error(std::format("指令错误，在 \033[4m{}\033[m\n", argv[1])); return;
-		}
-		hours = atoi(argv[2]);
-		if (hours <= 0 || hours >= 24)
-		{
-			Logger::error(std::format("参数错误，在 \033[4m{}\033[m\n", argv[2])); return;
-		}
-		break;
-	case 5:
-		Logger::debug(std::format("命令1 {}，参数1 {} | 命令2 {}，参数2 {}\n",argv[1], argv[2], argv[3], argv[4]));
+	cmdline::parser p{};
+	p.add<int>("hour", 'h', "需要暂停的小时数[0,23]", false, 0,cmdline::range(1,23));
+	p.add<int>("minute", 'm', "需要暂停的分钟数[1,59]", true, 1, cmdline::range(1, 59));
 
-		if (strcmp(argv[1], "-H") && strcmp(argv[1], "-h"))
-		{
-			Logger::error(std::format("指令错误，在 \033[4m{}\033[m\n", argv[1])); return;
-		}
-		hours = atoi(argv[2]);
-		if (hours < 0 || hours >= 24)
-		{
-			Logger::error(std::format("参数错误，在 \033[4m{}\033[m\n", argv[2])); return;
-		}
+	p.parse_check(argc,argv);
+	int hours{p.get<int>("hour")}, minutes{p.get<int>("minute")};
 
-		if (strcmp(argv[3], "-M") && strcmp(argv[3], "-m"))
-		{
-			Logger::error(std::format("指令错误，在 \033[4m{}\033[m\n", argv[3])); return;
-		}
-		minutes = atoi(argv[4]);
-		if (minutes <= 0 || minutes >= 24)
-		{
-			Logger::error(std::format("参数错误，在 \033[4m{}\033[m\n", argv[4])); return;
-		}
-		break;
-	default:
-		Logger::error("启动参数错误\n");
-		break;
-	}
-	
 	static const auto StopDuration{ std::chrono::hours(hours) + std::chrono::minutes(minutes)};
 	const auto StopTime{ std::chrono::system_clock::now() + StopDuration };
 	const auto StopTime_t{ std::chrono::system_clock::to_time_t(StopTime) };

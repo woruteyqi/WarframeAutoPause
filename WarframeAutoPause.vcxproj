@@ -110,6 +110,7 @@ xcopy /Y "$(ProjectDir)lib\Interception\*.exe" "$(TargetDir)"
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cmdline.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="EEparser.h" />
     <ClInclude Include="ImageProc.h" />

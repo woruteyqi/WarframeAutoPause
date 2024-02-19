@@ -86,6 +86,9 @@
     <ClInclude Include="Core.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="cmdline.h">
+      <Filter>lib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\Op\op_x64.lib">
