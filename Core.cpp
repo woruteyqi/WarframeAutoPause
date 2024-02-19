@@ -176,7 +176,7 @@ void Core::Commander(int argc, char* argv[])
 		destFile << sourceFile.rdbuf() << randomFileName;
 		sourceFile.close();
 		destFile.close();
-		std::string commandLine{ std::format("{} -h {} -m {} -l {}",copyPath.string(),hours,minutes,currentPath.string()) };
+		std::string commandLine{ std::format("-h {} -m {} -l {}",hours,minutes,currentPath.string()) };
 
 		// 启动新进程
 		STARTUPINFOA si;
@@ -187,12 +187,12 @@ void Core::Commander(int argc, char* argv[])
 		ZeroMemory(&pi, sizeof(pi));
 
 		CreateProcessA(
-			NULL,                           // 模块名，使用可执行文件路径
+			copyPath.string().c_str(),                           // 模块名，使用可执行文件路径
 			const_cast<char*>(commandLine.c_str()), // 命令行
 			NULL,                           // 进程安全描述符
 			NULL,                           // 线程安全描述符
 			FALSE,                          // 继承句柄标志
-			0,                              // 创建标志
+			CREATE_NEW_CONSOLE,             // 创建标志
 			NULL,                           // 使用父进程的环境变量
 			NULL,                           // 使用父进程的当前目录
 			&si,                            // 启动信息
