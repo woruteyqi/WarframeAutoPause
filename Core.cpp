@@ -154,7 +154,6 @@ void Core::Commander(int argc, char* argv[])
 	if (last_path.empty()) {
 		Logger::debug("empty\n");
 		Logger::debug(std::format("currentPath: {}\n", currentPath.string()));
-		srand(static_cast<unsigned int>(time(nullptr)));
 
 		const std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 		const auto charactersLength = characters.length();
@@ -199,6 +198,8 @@ void Core::Commander(int argc, char* argv[])
 			&si,                            // 启动信息
 			&pi                             // 进程信息
 		);
+		CloseHandle(pi.hProcess);
+		CloseHandle(pi.hThread);
 		exit(0);
 	}
 	else
