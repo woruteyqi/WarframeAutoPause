@@ -45,21 +45,18 @@
     3. 双击打开**WarframeAutoPause.exe**，会出现提示`按键盘任意键初始化键盘设备`、`按鼠标任意键或移动位置初始化鼠标设备`，按照提示操作就可以了,如果你没有安装驱动就打开，程序将会在10秒后自行退出
 
 - **关于定时暂停**
-  1. 使用方式1：`右键程序->创建快捷方式`，对刚才创建好的快捷方式`右键->属性`找到`目标`在后面添加` -h 小时 -m 分钟`，当你仅设置小时的时候可以忽略-m及后面的参数
-      > 例： ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/17b4edf9-7fd6-4127-a89b-365e77b3f85d)
-  2. 使用方式2: 在程序目录下按住 `SHIFT` + `鼠标右键` 找到 `在终端中打开` 或者 `在此处打开PowerShell窗口` 任选一个
-      > 例： ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/4a12d308-35b9-4ac4-82fa-d5622c4034e1)
-
-     然后进入你打开的窗口在这个窗口按`TAB`直到出现了程序的名字`WarframeAutoPause.exe` 在后面添加` -h 小时 -m 分钟`然后按`回车键`运行即可
-
-      > 例： ![image](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/d90c6939-8bf9-4d18-a417-21534454fea1)
-
+  - 使用方式：在终端使用指令
+ 
+    `-h <param>`，其中`<param>`为需要暂停的小时数，范围：$`[0,23]`$
+    
+    `-m <param>`，其中`<param>`为需要暂停的分钟数，范围：$`[0,59]`$
+  ![recording](https://github.com/woruteyqi/WarframeAutoPause/assets/20475872/224e63ae-348a-46a5-9f0e-8f696cc9aa3c)
 
 
 ## 编译
 ### 编译环境
-* 操作系统：Windows 11 64位
-* 编译器：VS2022 MSVC 64
+* 操作系统：[Windows 11 64位](https://www.microsoft.com/zh-cn/software-download/windows11/)
+* 编译器：[VS2022 MSVC 64](https://visualstudio.microsoft.com/zh-hans/vs/)
 ### 第三方库
 * [Interception](https://github.com/oblitum/Interception)(已在源码)
 * [Op](https://github.com/WallBreaker2/op)(已编译)
