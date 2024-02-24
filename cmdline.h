@@ -150,7 +150,7 @@ namespace cmdline {
         range_reader(const T& low, const T& high) : low(low), high(high) {}
         T operator()(const std::string& s) const {
             T ret = default_reader<T>()(s);
-            if (!(ret >= low && ret <= high)) throw cmdline::cmdline_error("range_error");
+            if (!(ret >= low && ret <= high)) throw cmdline::cmdline_error("范围错误");
             return ret;
         }
     private:
@@ -316,7 +316,7 @@ namespace cmdline {
         void add(const std::string& name,
                  char short_name = 0,
                  const std::string& desc = "") {
-            if (options.count(name)) throw cmdline_error("multiple definition: " + name);
+            if (options.count(name)) throw cmdline_error("重定义: " + name);
             options[name] = new option_without_value(name, short_name, desc);
             ordered.push_back(options[name]);
         }
@@ -337,7 +337,7 @@ namespace cmdline {
                  bool need = true,
                  const T def = T(),
                  F reader = F()) {
-            if (options.count(name)) throw cmdline_error("multiple definition: " + name);
+            if (options.count(name)) throw cmdline_error("重定义: " + name);
             options[name] = new option_with_value_with_reader<T, F>(name, short_name, need, def, desc, reader);
             ordered.push_back(options[name]);
         }
@@ -387,7 +387,7 @@ namespace cmdline {
                 if (arg[i] == '\\') {
                     i++;
                     if (i >= arg.length()) {
-                        errors.push_back("unexpected occurrence of '\\' at end of string");
+                        errors.push_back("发生无法预料的 '\\' 在末尾");
                         return false;
                     }
                 }
@@ -396,7 +396,7 @@ namespace cmdline {
             }
 
             if (in_quote) {
-                errors.push_back("quote is not closed");
+                errors.push_back("引用未关闭");
                 return false;
             }
 
