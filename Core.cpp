@@ -142,7 +142,7 @@ void Core::Commander(int argc, char* argv[])
 	Logger::debug(std::format("argc:{}\n", argc));
 	cmdline::parser p{};
 	p.add<int>("hour", 'h', "需要暂停的小时数[0,23]", false, 0,cmdline::range(0,23));
-	p.add<int>("minute", 'm', "需要暂停的分钟数[1,59]", false, 0, cmdline::range(0, 59));
+	p.add<int>("minute", 'm', "需要暂停的分钟数[0,59]", false, 0, cmdline::range(0, 59));
 	p.add<std::string>("last_path", 'l',"原始文件目录",false,"");
 
 	p.parse_check(argc,argv);
