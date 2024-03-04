@@ -156,15 +156,13 @@ void Core::Commander(int argc, char* argv[])
 		Logger::debug(std::format("currentPath: {}\n", currentPath.string()));
 
 		//随机新进程名
-		const std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-		const auto charactersLength = characters.length();
+		const std::string characters{ "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" };
+		const auto charactersLength{ characters.length() };
 		std::random_device rd;
 		std::mt19937 generator(rd());
 		std::uniform_int_distribution<size_t> distribution(0, charactersLength - 1);
 		std::string randomFileName;
-		for (int i = 0; i < 10; ++i) {
-			randomFileName += characters[distribution(generator)];
-		}
+		for (int i = 0; i < 10; ++i) randomFileName += characters[distribution(generator)];
 		randomFileName += ".exe";
 		Logger::debug(std::format("randomFileName: {}\n", randomFileName));
 		fs::path copyPath = currentPath.parent_path() / randomFileName;
